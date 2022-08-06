@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class Main extends Application {
     @Override
@@ -18,7 +19,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-//        Locale.setDefault(new Locale("fr"));
+        Locale.setDefault(new Locale("fr"));
         launch();
+
     }
 }
