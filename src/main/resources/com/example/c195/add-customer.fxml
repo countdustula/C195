@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="479.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.addCustomerController">
+   <children>
+      <ComboBox fx:id="customerCountry" layoutX="469.0" layoutY="46.0" prefWidth="150.0" />
+      <ComboBox layoutX="469.0" layoutY="124.0" prefWidth="150.0" />
+      <Label layoutX="406.0" layoutY="46.0" prefHeight="26.0" prefWidth="55.0" text="Country:" />
+      <Label layoutX="386.0" layoutY="123.0" prefHeight="26.0" prefWidth="74.0" text="Division ID:" />
+      <TextField fx:id="customerName" layoutX="90.0" layoutY="46.0" />
+      <TextField fx:id="customerAddress" layoutX="90.0" layoutY="97.0" />
+      <TextField fx:id="customerPostalCode" layoutX="90.0" layoutY="149.0" />
+      <TextField fx:id="customerPhone" layoutX="90.0" layoutY="198.0" />
+      <Label layoutX="34.0" layoutY="45.0" prefHeight="26.0" prefWidth="38.0" text="Name:" />
+      <Label layoutX="25.0" layoutY="96.0" prefHeight="26.0" prefWidth="55.0" text="Address:" />
+      <Label layoutX="15.0" layoutY="148.0" prefHeight="26.0" prefWidth="74.0" text="Postal Code:" />
+      <Label layoutX="25.0" layoutY="197.0" prefHeight="26.0" prefWidth="55.0" text="Phone:" />
+      <Button fx:id="submit" layoutX="568.0" layoutY="415.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="113.0" text="Submit" />
+      <Button fx:id="cancel" layoutX="25.0" layoutY="407.0" mnemonicParsing="false" onAction="#cancelToMainForm" prefHeight="49.0" prefWidth="74.0" text="Cancel" />
+   </children>
+</AnchorPane>
