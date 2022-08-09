@@ -22,10 +22,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class addCustomerController implements Initializable {
+public class updateCustomerController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    public static ObservableList<Integer> USID = FXCollections.observableArrayList();
+    public static ObservableList<Integer> canadaID = FXCollections.observableArrayList();
+    public static ObservableList<Integer> UKID = FXCollections.observableArrayList();
+    Integer customerID;
     @FXML
     Button submit;
     @FXML
@@ -38,18 +42,15 @@ public class addCustomerController implements Initializable {
     TextField customerPostalCode;
     @FXML
     TextField customerPhone;
-    public static ObservableList<String> countries= FXCollections.observableArrayList(
+    @FXML
+    ComboBox<Integer> customerDivisionID = new ComboBox<>();
+    public static ObservableList<String> countries = FXCollections.observableArrayList(
             "United Kingdom",
             "United States",
             "Canada"
     );
-    public static ObservableList<Integer> USID = FXCollections.observableArrayList();
-    public static ObservableList<Integer> canadaID = FXCollections.observableArrayList();
-    public static ObservableList<Integer> UKID = FXCollections.observableArrayList();
     @FXML
     ComboBox<String> customerCountry = new ComboBox(countries);
-    @FXML
-    ComboBox<Integer> customerDivisionID = new ComboBox<>();
 
     @FXML
     public void cancelToMainForm(ActionEvent actionEvent) throws IOException {
@@ -60,6 +61,7 @@ public class addCustomerController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 
     @FXML
     public void submit(ActionEvent actionEvent) throws IOException, SQLException {
@@ -76,13 +78,16 @@ public class addCustomerController implements Initializable {
         else{
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             Statement statement = JDBC.connection.createStatement();
-            JDBC.connection.createStatement().executeUpdate("INSERT INTO `customers`" +
-                    " (`Customer_Name`,`Address`,`Postal_Code`,`Phone`,`Create_Date`," +
-                    " `Created_By`, `Last_Update` , `Last_Updated_By`, `Division_ID`)" +
-                    " VALUES ('" + customerName.getText().toString() + "','" + customerAddress.getText().toString() + "'," +
-                    "'" +customerPostalCode.getText().toString() + "', '" + customerPhone.getText().toString() + "'," +
-                    " '" + dtf.format(LocalDateTime.now()).toString()  + "', 'software'," +
-                    " '" + dtf.format(LocalDateTime.now()).toString() + "', 'software', '" + customerDivisionID.getValue().toString() + "')");
+            JDBC.connection.createStatement().executeUpdate("UPDATE customers\n" +
+                    "SET\n" +
+                    "\tCustomer_Name = '" + customerName.getText().toString() + "', \n" +
+                    "\tAddress = '" + customerAddress.getText().toString() + "', \n" +
+                    "\tPostal_Code = '" + customerPostalCode.getText().toString() + "', \n" +
+                    "\tPhone = '" + customerPhone.getText().toString() + "', \n" +
+                    "\tLast_Update = '" + dtf.format(LocalDateTime.now()).toString() + "', \n" +
+                    "\tDivision_ID = '" + customerDivisionID.getValue().toString()+ "' \n" +
+                    "WHERE\n" +
+                    "\tCustomer_ID = " + customerID);
             customer.getAllCustomers().clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -94,13 +99,42 @@ public class addCustomerController implements Initializable {
 
     @FXML
     private void comboAction(ActionEvent event) {
-        if(customerCountry.getValue().contentEquals("United Kingdom")) {
+        if (customerCountry.getValue().contentEquals("United Kingdom")) {
             customerDivisionID.setItems(UKID);
         }
-        if(customerCountry.getValue().contentEquals("United States")) {
+        if (customerCountry.getValue().contentEquals("United States")) {
             customerDivisionID.setItems(USID);
         }
-        if(customerCountry.getValue().contentEquals("Canada")) {
+        if (customerCountry.getValue().contentEquals("Canada")) {
+            customerDivisionID.setItems(canadaID);
+        }
+    }
+
+    public void setAllTextFields(customer customer) {
+        customerName.setText(customer.getName());
+        customerAddress.setText(customer.getAddress());
+        customerPostalCode.setText(customer.getPostalCode());
+        customerPhone.setText(customer.getPhone());
+        customerDivisionID.setValue(customer.getDivisionID());
+        customerID = customer.getId();
+
+        if(customer.getId() < 55){
+            customerCountry.setValue("United States");
+        }
+        if(customer.getId() < 73 && customerDivisionID.getValue() > 54){
+            customerCountry.setValue("Canada");
+        }
+        if(customer.getId() > 72){
+            customerCountry.setValue("United Kingdom");
+        }
+
+        if (customerCountry.getValue().contentEquals("United Kingdom")) {
+            customerDivisionID.setItems(UKID);
+        }
+        if (customerCountry.getValue().contentEquals("United States")) {
+            customerDivisionID.setItems(USID);
+        }
+        if (customerCountry.getValue().contentEquals("Canada")) {
             customerDivisionID.setItems(canadaID);
         }
     }
@@ -109,14 +143,16 @@ public class addCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCountry.setItems(countries);
 
-        for (int i=1; i<=54; i++){
+        for (int i = 1; i <= 54; i++) {
             USID.add(i);
         }
-        for (int i=60; i<=72; i++){
+        for (int i = 60; i <= 72; i++) {
             canadaID.add(i);
         }
-        for (int i=101; i<=104; i++){
+        for (int i = 101; i <= 104; i++) {
             UKID.add(i);
         }
+
+
     }
 }

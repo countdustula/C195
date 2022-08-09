@@ -7,14 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class mainScreenController implements Initializable {
@@ -44,6 +44,10 @@ public class mainScreenController implements Initializable {
     TableColumn<customer, Integer> customerDivisionID;
     @FXML
     Button addCustomer;
+    @FXML
+    Button updateCustomer;
+    @FXML
+    Button deleteCustomer;
 
     @FXML
     public void switchToAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -53,6 +57,53 @@ public class mainScreenController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void deleteCustomer(ActionEvent actionEvent) throws SQLException {
+        if (customers.getSelectionModel().isEmpty()) {
+            loginController.showAlert("No customer selected", "You did not select a customer to delete."
+                    , "Please select a customer and try again.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deleting Customer", ButtonType.YES, ButtonType.NO);
+            alert.setTitle("Deleting Customer");
+            alert.setHeaderText("You are about to delete this selected customer.");
+            alert.setContentText("Are you sure you want to delete this customer?");
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                customer selectedCustomer = (customer) customers.getSelectionModel().getSelectedItem();
+                String id = String.valueOf(selectedCustomer.getId());
+
+                Statement statement = JDBC.connection.createStatement();
+                JDBC.connection.createStatement().executeUpdate("delete from customers where Customer_ID=" + id);
+
+                customer.getAllCustomers().clear();
+                customer.DBtoAL();
+            }
+        }
+    }
+
+    @FXML
+    public void switchToUpdateCustomer(ActionEvent actionEvent) throws IOException {
+        if(!customers.getSelectionModel().isEmpty()) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("update-customer.fxml"));
+            root = loader.load();
+
+            customer selectedCustomer = (customer) customers.getSelectionModel().getSelectedItem();
+
+            updateCustomerController updateCustomerController = loader.getController();
+            updateCustomerController.setAllTextFields(selectedCustomer);
+
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else{
+            loginController.showAlert("Please select a customer", "No customer was selected", "Please select a customer and try again");
+        }
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

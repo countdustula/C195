@@ -27,5 +27,7 @@
          </columns>
       </TableView>
       <Button fx:id="addCustomer" layoutX="40.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="29.0" prefWidth="116.0" text="Add Customer" />
+      <Button fx:id="updateCustomer" layoutX="170.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchToUpdateCustomer" prefHeight="29.0" prefWidth="116.0" text="Update Customer" />
+      <Button fx:id="deleteCustomer" layoutX="607.0" layoutY="231.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="29.0" prefWidth="116.0" text="Delete Customer" />
    </children>
 </AnchorPane>
