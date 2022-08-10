@@ -54,7 +54,6 @@ public class updateCustomerController implements Initializable {
 
     @FXML
     public void cancelToMainForm(ActionEvent actionEvent) throws IOException {
-        customer.getAllCustomers().clear();
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);

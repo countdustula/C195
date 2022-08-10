@@ -18,16 +18,9 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class mainScreenController implements Initializable {
-
-
     private Stage stage;
-
-
     private Scene scene;
-
-
     private Parent root;
-
     @FXML
     TableView<Object> customers;
     @FXML
@@ -70,10 +63,25 @@ public class mainScreenController implements Initializable {
     Button updateCustomer;
     @FXML
     Button deleteCustomer;
+    @FXML
+    Button addAppointment;
+    @FXML
+    Button updateAppointment;
+    @FXML
+    Button deleteAppointment;
 
     @FXML
     public void switchToAddCustomer(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("add-customer.fxml"));
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void switchToAddAppointment(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("add-appointment.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -136,6 +144,8 @@ public class mainScreenController implements Initializable {
         customerPhoneNumber.setCellValueFactory(new PropertyValueFactory<customer, String>("phone"));
         customerDivisionID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("divisionID"));
 
+        customer.getAllCustomers().clear();
+        appointment.getAllAppointments().clear();
         JDBC.openConnection();
         customer.DBtoAL();
         appointment.DBtoAL();

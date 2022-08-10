@@ -23,6 +23,7 @@ public class appointment {
     private Integer userID;
     private Integer contact;
     public static ObservableList<Object> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Object> allContacts = FXCollections.observableArrayList();
 
     public appointment(Integer id, String title, String description, String location, String type, String start, String end, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, Integer customerID, Integer userID, Integer contactID) {
         this.id = id;
