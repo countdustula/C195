@@ -20,10 +20,18 @@
             <TableColumn fx:id="customerDivisionID" minWidth="8.79998779296875" prefWidth="113.60003662109375" text="Division ID" />
         </columns>
       </TableView>
-      <TableView layoutY="274.0" prefHeight="203.0" prefWidth="738.0">
+      <TableView fx:id="appointments" layoutY="274.0" prefHeight="203.0" prefWidth="738.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn fx:id="appointmentID" prefWidth="66.0" text="ID" />
+            <TableColumn fx:id="appointmentTitle" prefWidth="72.0" text="Title" />
+            <TableColumn fx:id="appointmentDescription" prefWidth="72.0" text="Description" />
+            <TableColumn fx:id="appointmentLocation" prefWidth="72.0" text="Location" />
+            <TableColumn fx:id="appointmentContact" prefWidth="72.0" text="Contact" />
+            <TableColumn fx:id="appointmentType" prefWidth="72.0" text="Type" />
+            <TableColumn fx:id="appointmentStart" prefWidth="72.0" text="Start" />
+            <TableColumn fx:id="appointmentEnd" prefWidth="72.0" text="End" />
+            <TableColumn fx:id="appointmentCustomerID" prefWidth="90.0" text="Customer ID" />
+            <TableColumn fx:id="appointmentUserID" prefWidth="72.0" text="User ID" />
          </columns>
       </TableView>
       <Button fx:id="addCustomer" layoutX="40.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="29.0" prefWidth="116.0" text="Add Customer" />

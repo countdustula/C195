@@ -31,6 +31,28 @@ public class mainScreenController implements Initializable {
     @FXML
     TableView<Object> customers;
     @FXML
+    TableView<Object> appointments;
+    @FXML
+    TableColumn<appointment, Integer> appointmentID;
+    @FXML
+    TableColumn<appointment, String> appointmentTitle;
+    @FXML
+    TableColumn<appointment, String> appointmentDescription;
+    @FXML
+    TableColumn<appointment, String> appointmentLocation;
+    @FXML
+    TableColumn<appointment, Integer> appointmentContact;
+    @FXML
+    TableColumn<appointment, String> appointmentType;
+    @FXML
+    TableColumn<appointment, String> appointmentStart;
+    @FXML
+    TableColumn<appointment, String> appointmentEnd;
+    @FXML
+    TableColumn<appointment, Integer> appointmentCustomerID;
+    @FXML
+    TableColumn<appointment, Integer> appointmentUserID;
+    @FXML
     TableColumn<customer, Integer> customerID;
     @FXML
     TableColumn<customer, String> customerName;
@@ -116,10 +138,25 @@ public class mainScreenController implements Initializable {
 
         JDBC.openConnection();
         customer.DBtoAL();
+        appointment.DBtoAL();
 
 
+        appointmentID.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("id"));
+        appointmentTitle.setCellValueFactory(new PropertyValueFactory<appointment, String>("title"));
+        appointmentDescription.setCellValueFactory(new PropertyValueFactory<appointment, String>("description"));
+        appointmentLocation.setCellValueFactory(new PropertyValueFactory<appointment, String>("location"));
+        appointmentContact.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("contact"));
+        appointmentType.setCellValueFactory(new PropertyValueFactory<appointment, String>("type"));
+        appointmentStart.setCellValueFactory(new PropertyValueFactory<appointment, String>("start"));
+        appointmentEnd.setCellValueFactory(new PropertyValueFactory<appointment, String>("end"));
+        appointmentCustomerID.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("customerID"));
+        appointmentUserID.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("userID"));
 
         customers.setItems(customer.getAllCustomers());
+        appointments.setItems(appointment.getAllAppointments());
+
+
+
 
     }
 }
