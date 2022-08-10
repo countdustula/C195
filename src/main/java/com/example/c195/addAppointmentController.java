@@ -57,11 +57,16 @@ public class addAppointmentController implements Initializable {
 
     @FXML
     public void submit(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
-        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if(title.getText().isEmpty() || description.getText().isEmpty()){
+            loginController.showAlert("test", "test", "test");
+        }
+        else {
+            root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @Override
