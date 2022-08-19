@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class appointment {
     private Integer id;
@@ -24,6 +25,7 @@ public class appointment {
     private Integer contact;
     public static ObservableList<Object> allAppointments = FXCollections.observableArrayList();
     public static ObservableList<Object> allContacts = FXCollections.observableArrayList();
+    public static ArrayList<appointment> allAppointmentsArrayList = new ArrayList<>();
 
     public appointment(Integer id, String title, String description, String location, String type, String start, String end, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, Integer customerID, Integer userID, Integer contactID) {
         this.id = id;
@@ -68,6 +70,7 @@ public class appointment {
                         result.getInt(13),
                         result.getInt(14));
 
+                allAppointmentsArrayList.add(appointment);
                 getAllAppointments().add(appointment);
             }
         } catch (SQLException e) {

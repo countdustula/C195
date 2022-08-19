@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class customer {
 private Integer id;
@@ -19,6 +20,7 @@ private String lastUpdate;
 private String lastUpdatedBy;
 private Integer divisionID;
 public static ObservableList<Object> allCustomers = FXCollections.observableArrayList();
+public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
 
     public customer(Integer id, String name, String address, String postalCode, String phone, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, Integer divisionID) {
         this.id = id;
@@ -54,6 +56,7 @@ public static ObservableList<Object> allCustomers = FXCollections.observableArra
                         result.getString(9),
                         result.getInt(10));
 
+                allCustomersArrayList.add(customera);
                 getAllCustomers().add(customera);
             }
         } catch (SQLException e) {
@@ -140,4 +143,19 @@ public static ObservableList<Object> allCustomers = FXCollections.observableArra
     public Integer getDivisionID() {
         return divisionID;
     }
+
+    public static ArrayList<customer> getAllCustomersArrayList(){
+        return allCustomersArrayList;
+    }
+
+    public static ObservableList<Object> getAllCustomerID() {
+        ObservableList ans = FXCollections.observableArrayList();
+
+        for(int i=0; i < allCustomersArrayList.size(); i++){
+            ans.add(allCustomersArrayList.get(i).getId());
+        }
+
+        return ans;
+    }
+
 }

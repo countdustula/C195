@@ -6,39 +6,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="524.0" prefWidth="747.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.mainScreenController">
+<AnchorPane prefHeight="616.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.mainScreenController">
    <children>
-      <Text layoutX="206.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Records" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
-      <Text layoutX="210.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
-      <TableView fx:id="customers" layoutX="4.0" layoutY="23.0" prefHeight="203.0" prefWidth="738.0">
+      <Text layoutX="286.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Records" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
+      <Text layoutX="305.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
+      <TableView fx:id="customers" layoutX="4.0" layoutY="23.0" prefHeight="206.0" prefWidth="934.0">
         <columns>
           <TableColumn fx:id="customerID" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="customerName" prefWidth="148.0" text="Name" />
-            <TableColumn fx:id="customerAddress" prefWidth="147.99998474121094" text="Address" />
-            <TableColumn fx:id="customerPostalCode" prefWidth="147.20001220703125" text="Postal Code" />
-            <TableColumn fx:id="customerPhoneNumber" minWidth="8.79998779296875" prefWidth="113.60003662109375" text="Phone Number" />
-            <TableColumn fx:id="customerDivisionID" minWidth="8.79998779296875" prefWidth="113.60003662109375" text="Division ID" />
+          <TableColumn fx:id="customerName" prefWidth="194.40003967285156" text="Name" />
+            <TableColumn fx:id="customerAddress" prefWidth="172.0" text="Address" />
+            <TableColumn fx:id="customerPostalCode" prefWidth="174.39996337890625" text="Postal Code" />
+            <TableColumn fx:id="customerPhoneNumber" minWidth="8.79998779296875" prefWidth="176.00006103515625" text="Phone Number" />
+            <TableColumn fx:id="customerDivisionID" minWidth="8.79998779296875" prefWidth="143.20001220703125" text="Division ID" />
         </columns>
       </TableView>
-      <TableView fx:id="appointments" layoutX="3.0" layoutY="272.0" prefHeight="203.0" prefWidth="738.0">
+      <TableView fx:id="appointments" layoutX="2.0" layoutY="294.0" prefHeight="222.0" prefWidth="934.0">
          <columns>
-            <TableColumn fx:id="appointmentID" prefWidth="66.0" text="ID" />
-            <TableColumn fx:id="appointmentTitle" prefWidth="72.0" text="Title" />
+            <TableColumn fx:id="appointmentID" prefWidth="49.60000681877136" text="ID" />
+            <TableColumn fx:id="appointmentTitle" prefWidth="88.79998397827148" text="Title" />
             <TableColumn fx:id="appointmentDescription" prefWidth="117.5999755859375" text="Description" />
-            <TableColumn fx:id="appointmentLocation" prefWidth="80.00006103515625" text="Location" />
-            <TableColumn fx:id="appointmentContact" prefWidth="62.39996337890625" text="Contact" />
-            <TableColumn fx:id="appointmentType" prefWidth="69.5999755859375" text="Type" />
-            <TableColumn fx:id="appointmentStart" prefWidth="72.79995727539062" text="Start" />
-            <TableColumn fx:id="appointmentEnd" prefWidth="74.4000244140625" text="End" />
-            <TableColumn fx:id="appointmentCustomerID" prefWidth="75.20001220703125" text="Customer ID" />
-            <TableColumn fx:id="appointmentUserID" prefWidth="48.0" text="User ID" />
+            <TableColumn fx:id="appointmentLocation" prefWidth="103.99993896484375" text="Location" />
+            <TableColumn fx:id="appointmentContact" prefWidth="64.800048828125" text="Contact" />
+            <TableColumn fx:id="appointmentType" prefWidth="116.0" text="Type" />
+            <TableColumn fx:id="appointmentStart" prefWidth="129.60003662109375" text="Start" />
+            <TableColumn fx:id="appointmentEnd" prefWidth="128.00006103515625" text="End" />
+            <TableColumn fx:id="appointmentCustomerID" prefWidth="78.40008544921875" text="Customer ID" />
+            <TableColumn fx:id="appointmentUserID" prefWidth="59.2000732421875" text="User ID" />
          </columns>
       </TableView>
-      <Button fx:id="addCustomer" layoutX="40.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="29.0" prefWidth="116.0" text="Add Customer" />
-      <Button fx:id="updateCustomer" layoutX="170.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchToUpdateCustomer" prefHeight="29.0" prefWidth="116.0" text="Update Customer" />
-      <Button fx:id="deleteCustomer" layoutX="607.0" layoutY="231.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="29.0" prefWidth="116.0" text="Delete Customer" />
-      <Button fx:id="addAppointment" layoutX="14.0" layoutY="480.0" mnemonicParsing="false" onAction="#switchToAddAppointment" prefHeight="29.0" prefWidth="116.0" text="Add Appointment" />
-      <Button fx:id="updateAppointment" layoutX="152.0" layoutY="480.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="30.0" prefWidth="130.0" text="Update Appointment" />
-      <Button fx:id="deleteAppointment" layoutX="593.0" layoutY="480.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="30.0" prefWidth="130.0" text="Delete Appointment" />
+      <Button fx:id="addCustomer" layoutX="40.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToAddCustomer" prefHeight="29.0" prefWidth="116.0" text="Add Customer" />
+      <Button fx:id="updateCustomer" layoutX="170.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchToUpdateCustomer" prefHeight="29.0" prefWidth="116.0" text="Update Customer" />
+      <Button fx:id="deleteCustomer" layoutX="607.0" layoutY="237.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="29.0" prefWidth="116.0" text="Delete Customer" />
+      <Button fx:id="addAppointment" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#switchToAddAppointment" prefHeight="29.0" prefWidth="116.0" text="Add Appointment" />
+      <Button fx:id="updateAppointment" layoutX="156.0" layoutY="527.0" mnemonicParsing="false" onAction="#switchToUpdateAppointment" prefHeight="30.0" prefWidth="130.0" text="Update Appointment" />
+      <Button fx:id="deleteAppointment" layoutX="600.0" layoutY="527.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="30.0" prefWidth="130.0" text="Delete Appointment" />
    </children>
 </AnchorPane>

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.addAppointmentController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.updateAppointmentController">
    <children>
       <Button fx:id="cancel" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#cancel" prefHeight="43.0" prefWidth="94.0" text="Cancel" />
       <Button fx:id="submit" layoutX="475.0" layoutY="341.0" mnemonicParsing="false" onAction="#submit" prefHeight="43.0" prefWidth="94.0" text="Submit" />

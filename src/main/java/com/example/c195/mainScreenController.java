@@ -15,12 +15,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class mainScreenController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    DateTimeFormatter hourAndMinute = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static Integer counter = 0;
+    public appointment upcomingAppointment;
     @FXML
     TableView<Object> customers;
     @FXML
@@ -89,6 +96,28 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
+    public void switchToUpdateAppointment(ActionEvent actionEvent) throws IOException {
+        if(!appointments.getSelectionModel().isEmpty()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("update-appointment.fxml"));
+            root = loader.load();
+
+            appointment selectedAppointment = (appointment) appointments.getSelectionModel().getSelectedItem();
+
+            updateAppointmentController updateAppointmentController = loader.getController();
+            updateAppointmentController.setAllTextFields(selectedAppointment);
+
+
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else{
+            loginController.showAlert("No appointment selected", "You have not selected an appointment.", "Please select an appointment and try again.");
+        }
+    }
+
+    @FXML
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException {
         if (customers.getSelectionModel().isEmpty()) {
             loginController.showAlert("No customer selected", "You did not select a customer to delete."
@@ -112,6 +141,32 @@ public class mainScreenController implements Initializable {
             }
         }
     }
+
+    @FXML
+    public void deleteAppointment(ActionEvent actionEvent) throws SQLException {
+        if (appointments.getSelectionModel().isEmpty()) {
+            loginController.showAlert("No appointment selected", "You did not select an appointment to delete."
+                    , "Please select an appointment and try again.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deleting Customer", ButtonType.YES, ButtonType.NO);
+            alert.setTitle("Deleting Appointment");
+            alert.setHeaderText("You are about to delete this selected appointment.");
+            alert.setContentText("Are you sure you want to delete this appointment?");
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                appointment selectedAppointment = (appointment) appointments.getSelectionModel().getSelectedItem();
+                String id = String.valueOf(selectedAppointment.getId());
+
+                Statement statement = JDBC.connection.createStatement();
+                JDBC.connection.createStatement().executeUpdate("delete from appointments where Appointment_ID=" + id);
+
+                appointment.getAllAppointments().clear();
+                appointment.DBtoAL();
+            }
+        }
+    }
+
 
     @FXML
     public void switchToUpdateCustomer(ActionEvent actionEvent) throws IOException {
@@ -144,8 +199,10 @@ public class mainScreenController implements Initializable {
         customerPhoneNumber.setCellValueFactory(new PropertyValueFactory<customer, String>("phone"));
         customerDivisionID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("divisionID"));
 
+        customer.getAllCustomersArrayList().clear();
         customer.getAllCustomers().clear();
         appointment.getAllAppointments().clear();
+        appointment.allAppointmentsArrayList.clear();
         JDBC.openConnection();
         customer.DBtoAL();
         appointment.DBtoAL();
@@ -165,8 +222,47 @@ public class mainScreenController implements Initializable {
         customers.setItems(customer.getAllCustomers());
         appointments.setItems(appointment.getAllAppointments());
 
+        LocalDateTime now = LocalDateTime.now();
 
+        System.out.println(appointment.allAppointmentsArrayList.get(0).getStart().substring(0, 10));
+        System.out.println(dtf.format(now).substring(0,10));
 
+        if(isThereUpcomingAppointment() == true && counter == 0) {
+            loginController.showAlert("Upcoming Appointment",
+                    "You have an appointment within 15 minutes from now.",
+                    "The appointment ID is " + upcomingAppointment.getId() + " and the date and times is " + upcomingAppointment.getStart());
+        }
+        else if(counter == 0){
+            loginController.showAlert("No Upcoming Appointments",
+                    "You have no appointments within 15 minutes from now.",
+                    "You have no appointments within 15 minutes from now.");
+        }
 
+        counter++;
+        System.out.println(dtf.format(now));
+        System.out.println(dtf.format(now).substring(11, 13));
+        System.out.println(dtf.format(now).substring(14, 16));
+    }
+
+    private boolean isThereUpcomingAppointment() {
+        String now = dtf.format(LocalDateTime.now()).toString();
+        String dateOfAppointment = null;
+
+        for(int i=0; i<appointment.allAppointmentsArrayList.size(); i++){
+            if(appointment.allAppointmentsArrayList.get(i).getStart().substring(0, 10).contentEquals(now.substring(0,10)) &&
+                    Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getStart().substring(11, 13)) == ((Integer.valueOf(now.substring(11, 13)))) + 1 &&
+            (Integer.valueOf(now.substring(14, 16))) >= 45) {
+                dateOfAppointment = "FOUND ONE";
+                upcomingAppointment = appointment.allAppointmentsArrayList.get(i);
+                System.out.println(dateOfAppointment);
+            }
+        }
+
+        if(dateOfAppointment == null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
