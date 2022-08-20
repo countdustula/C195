@@ -1,5 +1,4 @@
 package com.example.c195;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +40,7 @@ public class addAppointmentController implements Initializable {
     @FXML
     ComboBox<Object> contact;
     @FXML
-    TextField type;
+    ComboBox<Object> type;
     @FXML
     DatePicker date;
     @FXML
@@ -55,12 +54,14 @@ public class addAppointmentController implements Initializable {
     public static ObservableList<Object> contacts = FXCollections.observableArrayList();
     public static ObservableList<Object> times = FXCollections.observableArrayList();
     public static ObservableList<Object> userIDList = FXCollections.observableArrayList();
+    public static ObservableList<Object> types = FXCollections.observableArrayList();
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     DateTimeFormatter timeOnly = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     public void cancel(ActionEvent actionEvent) throws IOException {
         contacts.clear();
+        types.clear();
 
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -132,7 +133,7 @@ public class addAppointmentController implements Initializable {
     @FXML
     public void submit(ActionEvent actionEvent) throws IOException, SQLException {
         if(title.getText().isEmpty() || description.getText().isEmpty() || location.getText().isEmpty() ||
-            contact.getValue() == null || type.getText().isEmpty() || start.getValue() == null||
+            contact.getValue() == null || type.getValue() == null || start.getValue() == null||
             end.getValue() == null|| customerID.getValue() == null || userID.getValue() == null || date.getValue() == null){
             loginController.showAlert("Fields Empty", "One or more fields are empty.", "Please fill out all fields and try again.");
         }
@@ -153,9 +154,10 @@ public class addAppointmentController implements Initializable {
             if(contact.getValue().toString().contentEquals("Li Lee")){contactID = 3;}
 
             Statement statement = JDBC.connection.createStatement();
-            JDBC.connection.createStatement().executeUpdate("INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) Value (\"" + title.getText() + "\", \"" + description.getText() + "\", \"" + location.getText() + "\", \"" + type.getText() + "\", \"" + startSTRING + "\", \"" + endSTRING + "\", \"" + dtf.format(LocalDateTime.now()).toString()  + "\", \"software\", \"" + dtf.format(LocalDateTime.now()).toString() +"\", \"software\",  " + customerID.getValue().toString() + ", " + userID.getValue().toString() + ", " + contactID.toString() +")");
+            JDBC.connection.createStatement().executeUpdate("INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) Value (\"" + title.getText() + "\", \"" + description.getText() + "\", \"" + location.getText() + "\", \"" + type.getValue().toString() + "\", \"" + startSTRING + "\", \"" + endSTRING + "\", \"" + dtf.format(LocalDateTime.now()).toString()  + "\", \"software\", \"" + dtf.format(LocalDateTime.now()).toString() +"\", \"software\",  " + customerID.getValue().toString() + ", " + userID.getValue().toString() + ", " + contactID.toString() +")");
             appointment.getAllAppointments().clear();
             contacts.clear();
+            types.clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -172,10 +174,14 @@ public class addAppointmentController implements Initializable {
         contacts.add("Daniel Garcia");
         contacts.add("Li Lee");
 
+        types.add("Planning Session");
+        types.add("De-Briefing");
+
         userIDList.clear();
         userIDList.add(1);
         userIDList.add(2);
 
+        type.setItems(types);
         userID.setItems(userIDList);
         customerID.setItems(customer.getAllCustomerID());
 

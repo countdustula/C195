@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="616.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.mainScreenController">
+<AnchorPane prefHeight="697.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.c195.mainScreenController">
    <children>
       <Text layoutX="286.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Records" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
       <Text layoutX="305.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" textAlignment="CENTER" wrappingWidth="327.7366943359375" />
@@ -40,5 +40,8 @@
       <Button fx:id="addAppointment" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#switchToAddAppointment" prefHeight="29.0" prefWidth="116.0" text="Add Appointment" />
       <Button fx:id="updateAppointment" layoutX="156.0" layoutY="527.0" mnemonicParsing="false" onAction="#switchToUpdateAppointment" prefHeight="30.0" prefWidth="130.0" text="Update Appointment" />
       <Button fx:id="deleteAppointment" layoutX="600.0" layoutY="527.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="30.0" prefWidth="130.0" text="Delete Appointment" />
+      <Button fx:id="reports" layoutX="104.0" layoutY="637.0" mnemonicParsing="false" onAction="#switchToReports" prefHeight="40.0" prefWidth="145.0" text="Reports" />
+      <Button layoutX="555.0" layoutY="637.0" mnemonicParsing="false" onAction="#switchToContactSchedule" prefHeight="40.0" prefWidth="226.0" text="Contact Schedules" />
+      <Button layoutX="357.0" layoutY="637.0" mnemonicParsing="false" onAction="#switchToPercentages" prefHeight="40.0" prefWidth="138.0" text="Percentage Report" />
    </children>
 </AnchorPane>

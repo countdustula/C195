@@ -29,6 +29,8 @@ public class mainScreenController implements Initializable {
     public static Integer counter = 0;
     public appointment upcomingAppointment;
     @FXML
+    Button reports;
+    @FXML
     TableView<Object> customers;
     @FXML
     TableView<Object> appointments;
@@ -190,6 +192,36 @@ public class mainScreenController implements Initializable {
     }
 
 
+    @FXML
+    public void switchToReports(ActionEvent actionEvent) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("reports.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+    }
+
+    @FXML
+    public void switchToContactSchedule(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("contact-schedule.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void switchToPercentages(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("percentages.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("id"));
@@ -241,7 +273,7 @@ public class mainScreenController implements Initializable {
         counter++;
         System.out.println(dtf.format(now));
         System.out.println(dtf.format(now).substring(11, 13));
-        System.out.println(dtf.format(now).substring(14, 16));
+        System.out.println(dtf.format(now).substring(5, 7));
     }
 
     private boolean isThereUpcomingAppointment() {

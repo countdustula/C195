@@ -43,7 +43,7 @@ public class updateAppointmentController implements Initializable {
     @FXML
     ComboBox<Object> contact;
     @FXML
-    TextField type;
+    ComboBox<Object> type;
     @FXML
     DatePicker date;
     @FXML
@@ -57,6 +57,7 @@ public class updateAppointmentController implements Initializable {
     public static ObservableList<Object> contacts = FXCollections.observableArrayList();
     public static ObservableList<Object> times = FXCollections.observableArrayList();
     public static ObservableList<Object> userIDList = FXCollections.observableArrayList();
+    public static ObservableList<Object> types = FXCollections.observableArrayList();
     public static String selectedAppointmentDate;
     public static String selectedAppointmentStart;
     public static String selectedAppointmentEnd;
@@ -64,6 +65,7 @@ public class updateAppointmentController implements Initializable {
     @FXML
     public void cancel(ActionEvent actionEvent) throws IOException {
         contacts.clear();
+        types.clear();
 
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -151,7 +153,7 @@ public class updateAppointmentController implements Initializable {
     public void submit(ActionEvent actionEvent) throws IOException, SQLException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         if(title.getText().isEmpty() || description.getText().isEmpty() || location.getText().isEmpty() ||
-                contact.getValue() == null || type.getText().isEmpty() || start.getValue() == null||
+                contact.getValue() == null || type.getValue() == null || start.getValue() == null||
                 end.getValue() == null|| customerID.getValue() == null || userID.getValue() == null || date.getValue() == null){
             loginController.showAlert("test", "test", "test");
         }
@@ -179,7 +181,7 @@ public class updateAppointmentController implements Initializable {
                     "\tTitle = '" + title.getText().toString() + "', \n" +
                     "\tDescription = '" + description.getText().toString() + "', \n" +
                     "\tLocation = '" + location.getText().toString() + "', \n" +
-                    "\tType = '" + type.getText().toString() + "', \n" +
+                    "\tType = '" + type.getValue().toString() + "', \n" +
                     "\tStart = '" + startSTRING + "', \n" +
                     "\tEnd = '" + endSTRING + "', \n" +
                     "\tLast_Update = '" + dtf.format(LocalDateTime.now()).toString() + "', \n" +
@@ -194,6 +196,7 @@ public class updateAppointmentController implements Initializable {
 
             appointment.getAllAppointments().clear();
             contacts.clear();
+            types.clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -209,7 +212,7 @@ public class updateAppointmentController implements Initializable {
         if(appointment.getContact().equals(1)){contact.setValue("Anika Costa");}
         if(appointment.getContact().equals(2)){contact.setValue("Daniel Garcia");}
         if(appointment.getContact().equals(3)){contact.setValue("Li Lee");}
-        type.setText(appointment.getType());
+        type.setValue(appointment.getType());
         customerID.setValue(appointment.getCustomerID());
         userID.setValue(appointment.getUserID());
         date.setValue(LocalDate.parse(appointment.getStart().substring(0, 10)));
@@ -228,10 +231,14 @@ public class updateAppointmentController implements Initializable {
         contacts.add("Daniel Garcia");
         contacts.add("Li Lee");
 
+        types.add("Planning Session");
+        types.add("De-Briefing");
+
         userIDList.clear();
         userIDList.add(1);
         userIDList.add(2);
 
+        type.setItems(types);
         userID.setItems(userIDList);
         customerID.setItems(customer.getAllCustomerID());
 

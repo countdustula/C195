@@ -22,7 +22,6 @@
       <TextField fx:id="title" layoutX="61.0" layoutY="23.0" />
       <TextField fx:id="description" layoutX="95.0" layoutY="58.0" />
       <TextField fx:id="location" layoutX="85.0" layoutY="97.0" />
-      <TextField fx:id="type" layoutX="61.0" layoutY="187.0" />
       <ComboBox fx:id="contact" layoutX="84.0" layoutY="138.0" prefWidth="150.0" />
       <DatePicker fx:id="date" editable="false" layoutX="61.0" layoutY="230.0" />
       <ComboBox fx:id="start" layoutX="297.0" layoutY="230.0" prefWidth="150.0" />
@@ -31,5 +30,6 @@
       <ComboBox fx:id="end" layoutX="297.0" layoutY="276.0" prefWidth="150.0" />
       <ComboBox fx:id="customerID" layoutX="394.0" layoutY="45.0" prefWidth="150.0" />
       <ComboBox fx:id="userID" layoutX="372.0" layoutY="97.0" prefWidth="150.0" />
+      <ComboBox fx:id="type" layoutX="61.0" layoutY="188.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
