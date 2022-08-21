@@ -53,6 +53,11 @@ public class percentagesController implements Initializable {
         return  String.valueOf(obtained * 100 / total) + "%";
     }
 
+    MyInterface2 myInterface2 = (x, y) ->{
+
+        return  String.valueOf(x * 100 / y) + "%";
+    };
+
     public Integer januaryApps(){
         Integer count = 0;
         for(int i=0; i<appointment.allAppointmentsArrayList.size(); i++){
@@ -209,7 +214,6 @@ public class percentagesController implements Initializable {
         return count;
     }
 
-
     public void setAllFields(){
         january.setText(String.valueOf(calculatePercentage(januaryApps(), appointmentTotal)));
         february.setText(String.valueOf(calculatePercentage(februaryApps(), appointmentTotal)));
@@ -224,7 +228,7 @@ public class percentagesController implements Initializable {
         november.setText(String.valueOf(calculatePercentage(novemberApps(), appointmentTotal)));
         december.setText(String.valueOf(calculatePercentage(decemberApps(), appointmentTotal)));
         deBriefing.setText(String.valueOf(calculatePercentage(deBriefingSessions(), appointmentTotal)));
-        planningSession.setText(String.valueOf(calculatePercentage(planningSessions(), appointmentTotal)));
+        planningSession.setText(String.valueOf(myInterface2.percentageCalculator(Double.valueOf(planningSessions()), appointmentTotal)));
     }
 
     @FXML

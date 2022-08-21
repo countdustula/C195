@@ -14,13 +14,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class loginController implements Initializable {
+
+//    File file = new File("login_activity.txt");
+//    FileWriter fileWriter = new FileWriter(file);
+    PrintWriter pw = new PrintWriter(new FileOutputStream(
+            new File("login_activity.txt"),
+            true /* append = true */));
+
+
 
     /**
      * This is the stage for the main form
@@ -51,6 +60,9 @@ public class loginController implements Initializable {
     private Label passwordLabel;
     @FXML
     private Label locationLabel;
+
+    public loginController() throws IOException {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,12 +101,18 @@ public class loginController implements Initializable {
     public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
 
         if (!userId.getText().isEmpty() && isInt(userId.getText()) && !userPassword.getText().isEmpty()) {
+
+            pw.println("Successful login by UserID: " + userId.getText() + " at " + LocalDateTime.now() + "\n");
+            pw.close();
+
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } else {
+            pw.println("Unsuccessful login by UserID: " + userId.getText() + " at " + LocalDateTime.now());
+            pw.close();
             if (!String.valueOf(Locale.getDefault()).contentEquals("fr")) {
                 showAlert("Invalid input.", "User ID must only contain numbers.", "Also make sure that the password isn't blank.");
             }

@@ -8,10 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -135,7 +132,14 @@ public class addAppointmentController implements Initializable {
         if(title.getText().isEmpty() || description.getText().isEmpty() || location.getText().isEmpty() ||
             contact.getValue() == null || type.getValue() == null || start.getValue() == null||
             end.getValue() == null|| customerID.getValue() == null || userID.getValue() == null || date.getValue() == null){
-            loginController.showAlert("Fields Empty", "One or more fields are empty.", "Please fill out all fields and try again.");
+            MyInterface myInterface = (x, y, z) -> {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(x);
+                alert.setHeaderText(y);
+                alert.setContentText(z);
+                alert.showAndWait();
+            };
+            myInterface.alert("Fields Empty", "One or more fields are empty.","Please fill out all fields and try again.");
         }
 
         else if(!doTimesMakeSense()){
