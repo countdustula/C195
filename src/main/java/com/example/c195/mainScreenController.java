@@ -1,5 +1,7 @@
 package com.example.c195;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +30,9 @@ public class mainScreenController implements Initializable {
     DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static Integer counter = 0;
     public appointment upcomingAppointment;
+    public static ObservableList<Object> byMonthList = FXCollections.observableArrayList();
+    public static ObservableList<Object> byWeekList = FXCollections.observableArrayList();
+    ToggleGroup toggleGroup = new ToggleGroup();
     @FXML
     Button reports;
     @FXML
@@ -78,6 +83,49 @@ public class mainScreenController implements Initializable {
     Button updateAppointment;
     @FXML
     Button deleteAppointment;
+    @FXML
+    RadioButton viewAll, byMonth, byWeek;
+
+    @FXML
+    public void updateByMonth(){
+        byMonthList.clear();
+        for(int i=0; i<appointment.allAppointmentsArrayList.size(); i++) {
+            if (appointment.allAppointmentsArrayList.get(i).getStart().substring(5, 7).contentEquals(LocalDateTime.now().toString().substring(5, 7))){
+                byMonthList.add(appointment.allAppointmentsArrayList.get(i));
+            }
+            else {
+                System.out.println("ONE WAS BAD");
+            }
+        }
+
+        appointments.setItems(byMonthList);
+        System.out.println("YOU SELECTED UPDATE BY MONTH");
+    }
+
+
+    @FXML
+    public void updateByWeek(){
+        byWeekList.clear();
+        for(int i=0; i<appointment.allAppointmentsArrayList.size(); i++) {
+            if (Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getStart().substring(8, 10)) - Integer.valueOf(LocalDateTime.now().toString().substring(8, 10)) <= 7
+                    && Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getStart().substring(8, 10)) - Integer.valueOf(LocalDateTime.now().toString().substring(8, 10)) >= 0
+                    && appointment.allAppointmentsArrayList.get(i).getStart().substring(5, 7).contentEquals(LocalDateTime.now().toString().substring(5, 7)) ){
+                byWeekList.add(appointment.allAppointmentsArrayList.get(i));
+            }
+            else {
+                System.out.println("ONE WAS BAD");
+            }
+        }
+
+        appointments.setItems(byWeekList);
+        System.out.println("YOU SELECTED UPDATE BY WEEK");
+    }
+
+    @FXML
+    public void viewAllAppointments() {
+        appointments.setItems(appointment.getAllAppointments());
+        System.out.println("You selected view all appointments");
+    }
 
     @FXML
     public void switchToAddCustomer(ActionEvent actionEvent) throws IOException {
@@ -137,7 +185,11 @@ public class mainScreenController implements Initializable {
 
                 Statement statement = JDBC.connection.createStatement();
                 JDBC.connection.createStatement().executeUpdate("delete from customers where Customer_ID=" + id);
+                JDBC.connection.createStatement().executeUpdate("delete from appointments where Customer_ID=" + id);
 
+                appointment.allAppointmentsArrayList.clear();
+                appointment.allAppointments.clear();
+                appointment.DBtoAL();
                 customer.getAllCustomers().clear();
                 customer.DBtoAL();
             }
@@ -164,7 +216,13 @@ public class mainScreenController implements Initializable {
                 JDBC.connection.createStatement().executeUpdate("delete from appointments where Appointment_ID=" + id);
 
                 appointment.getAllAppointments().clear();
+                appointment.allAppointmentsArrayList.clear();
+                byMonthList.clear();
+                byWeekList.clear();
+                viewAll.setSelected(true);
                 appointment.DBtoAL();
+                appointments.setItems(appointment.getAllAppointments());
+
             }
         }
     }
@@ -222,14 +280,28 @@ public class mainScreenController implements Initializable {
         stage.show();
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+        final ToggleGroup group = new ToggleGroup();
+
+
+        viewAll.setToggleGroup(group);
+        viewAll.setSelected(true);
+        byMonth.setToggleGroup(group);
+        byWeek.setToggleGroup(group);
+
         customerID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("id"));
         customerName.setCellValueFactory(new PropertyValueFactory<customer, String>("name"));
         customerAddress.setCellValueFactory(new PropertyValueFactory<customer, String>("address"));
         customerPostalCode.setCellValueFactory(new PropertyValueFactory<customer, String>("postalCode"));
         customerPhoneNumber.setCellValueFactory(new PropertyValueFactory<customer, String>("phone"));
         customerDivisionID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("divisionID"));
+
+
 
         customer.getAllCustomersArrayList().clear();
         customer.getAllCustomers().clear();
@@ -257,7 +329,7 @@ public class mainScreenController implements Initializable {
         LocalDateTime now = LocalDateTime.now();
 
         System.out.println(appointment.allAppointmentsArrayList.get(0).getStart().substring(0, 10));
-        System.out.println(dtf.format(now).substring(0,10));
+        System.out.println(dtf.format(now).substring(5,7));
 
         if(isThereUpcomingAppointment() == true && counter == 0) {
             loginController.showAlert("Upcoming Appointment",
