@@ -53,6 +53,7 @@ public class percentagesController implements Initializable {
         return  String.valueOf(obtained * 100 / total) + "%";
     }
 
+    /**This is an instance of the interface to access the percentage calculator lambda function. */
     MyInterface2 myInterface2 = (x, y) ->{
 
         return  String.valueOf(x * 100 / y) + "%";

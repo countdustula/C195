@@ -21,10 +21,12 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**This is the controller for the login screen. */
 public class loginController implements Initializable {
 
-//    File file = new File("login_activity.txt");
-//    FileWriter fileWriter = new FileWriter(file);
+    /**
+     * This is the printwriter that is used to copy text to the "login_activity.txt"
+     */
     PrintWriter pw = new PrintWriter(new FileOutputStream(
             new File("login_activity.txt"),
             true /* append = true */));
@@ -46,24 +48,35 @@ public class loginController implements Initializable {
      */
     private Parent root;
 
+    /**This is the textfield for the user ID */
     @FXML
     private TextField userId;
+    /**This is the textfield for the user's password */
     @FXML
     private TextField userPassword;
+    /**This is the text that displays the location. */
     @FXML
     private Text locationText;
+    /**This is the login button. */
     @FXML
     private Button loginButton;
+    /**This is the label that signifies the user ID text box. */
     @FXML
     private Label userIdLabel;
+    /**This is the label that signifies the password text box. */
     @FXML
     private Label passwordLabel;
+    /**This is the label that signifies the location. */
     @FXML
     private Label locationLabel;
 
-    public loginController() throws IOException {
+    /**This is included for the Printwriter to work properly. */
+    public loginController() throws FileNotFoundException {
     }
 
+
+
+    /**This initializes the location text and decides what language the login screen will be in. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId zoneId = ZoneId.systemDefault();
@@ -80,6 +93,7 @@ public class loginController implements Initializable {
 
     }
 
+    /**This decides whether the input is an integer or not. */
     public static boolean isInt(String number) {
         try {
             int test = Integer.parseInt(number);
@@ -89,6 +103,7 @@ public class loginController implements Initializable {
         }
     }
 
+    /**This is the function that shows an alert when needed. */
     public static void showAlert(String windowText, String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(windowText);
@@ -97,6 +112,8 @@ public class loginController implements Initializable {
         alert.showAndWait();
     }
 
+
+    /**This function brings you to the main screen if the logic is correct for the sign in. */
     @FXML
     public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
 

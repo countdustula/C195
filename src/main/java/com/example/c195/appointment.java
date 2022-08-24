@@ -8,24 +8,42 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**This class represents the appointments that the user can create. */
 public class appointment {
+    /**This represents the appointment ID. */
     private Integer id;
+    /**This represents the title of the appointment. */
     private String title;
+    /**This represents the description of the appointment. */
     private String description;
+    /**This is the location of the appointment. */
     private String location;
+    /**This is the type of appointment. */
     private String type;
+    /**This is the start of the appointment. */
     private String start;
+    /**This is the end of the appointment. */
     private String end;
+    /**This is the date that the appointment was created. */
     private String createDate;
+    /**This represents what the appointment entry was created by. */
     private String createdBy;
+    /**This represents the last time the appointment was updated. */
     private String lastUpdate;
+    /**This represents how the last update was conducted. */
     private String lastUpdatedBy;
+    /**This is the customer ID that is associated with the appointment. */
     private Integer customerID;
+    /**This is the user ID that is associated with the appointment. */
     private Integer userID;
+    /**This is the contact that is associated with that appointment. */
     private Integer contact;
+    /**This is the ObservableList of all the appointments available. */
     public static ObservableList<Object> allAppointments = FXCollections.observableArrayList();
+    /**This is the ArrayList of all the appointments available.  This is used so that ArrayList operations can take place alongside the ObservableList. */
     public static ArrayList<appointment> allAppointmentsArrayList = new ArrayList<>();
 
+    /**This is the appointment constructor. */
     public appointment(Integer id, String title, String description, String location, String type, String start, String end, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, Integer customerID, Integer userID, Integer contactID) {
         this.id = id;
         this.title = title;
@@ -43,11 +61,13 @@ public class appointment {
         this.contact = contactID;
     }
 
+    /**This is the getter for all of appointments in an ObservableList. */
     public static ObservableList<Object> getAllAppointments(){
         return allAppointments;
     }
 
 
+    /**This function puts all of the database information into both the ArrayList and ObservableList. */
     public static void DBtoAL() {
 
         try {
@@ -77,83 +97,66 @@ public class appointment {
         }
     }
 
+
+    /**This is the getter for the appointment ID. */
     public Integer getId() {
         return id;
     }
 
+    /**This is the getter for the title of the appointment. */
     public String getTitle() {
         return title;
     }
 
+    /**This is the getter for the description of the appointment. */
     public String getDescription() {
         return description;
     }
 
+
+    /**This is the getter for the location of the appointment. */
     public String getLocation() {
         return location;
     }
 
+    /**This is the getter for the contact of the appointment. */
     public Integer getContact() {
         return contact;
     }
 
+    /**This is the getter for the type of appointment. */
     public String getType() {
         return type;
     }
 
+    /**This is the getter for the start of the appointment. */
     public String getStart() {
         return start;
     }
 
+
+    /**This is the getter for the end of the appointment. */
     public String getEnd() {
         return end;
     }
 
+
+    /**This is the getter for the customer ID associated with the appointment. */
     public Integer getCustomerID() {
         return customerID;
     }
 
+
+    /**This is the getter for the user ID associated with the appointment. */
     public Integer getUserID() {
         return userID;
     }
 
+
+    /**This is the setter for the ID associated with the appointment. */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setContact(Integer contactID) {
-        this.contact = contactID;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public void setCustomerID(Integer customerID) {
-        this.customerID = customerID;
-    }
-
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
 }

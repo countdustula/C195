@@ -21,71 +21,104 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**This is the main screen controller. */
 public class mainScreenController implements Initializable {
+    /**This is the stage for the main screen. */
     private Stage stage;
+    /**This is the scene for the main screen. */
     private Scene scene;
+    /**This is the root for the main screen. */
     private Parent root;
+    /**This is the DateTimeFormatter for all of the dates in the program. */
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    DateTimeFormatter hourAndMinute = DateTimeFormatter.ofPattern("HH:mm");
-    DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    /**This is the counter.  Once it's increased, there will be notification about upcoming appointments when reaching the main screen again. */
     public static Integer counter = 0;
+    /**This is the upcoming appointment that will show in the alert. */
     public appointment upcomingAppointment;
+    /**This is the Observable list that sorts the appointment by the current month. */
     public static ObservableList<Object> byMonthList = FXCollections.observableArrayList();
+    /**This is the ObservableList that sorts the appointments by the current week. */
     public static ObservableList<Object> byWeekList = FXCollections.observableArrayList();
-    ToggleGroup toggleGroup = new ToggleGroup();
+    /**This is the button that takes you to the reports. */
     @FXML
     Button reports;
+    /**This is the tableview that contains the customers. */
     @FXML
     TableView<Object> customers;
+    /**This is the tableview that contains the appointments. */
     @FXML
     TableView<Object> appointments;
+    /**This is the table column for the appointment ID. */
     @FXML
     TableColumn<appointment, Integer> appointmentID;
+    /**This is the table column for the appointment title. */
     @FXML
     TableColumn<appointment, String> appointmentTitle;
+    /**This is the table column for the appointment description. */
     @FXML
     TableColumn<appointment, String> appointmentDescription;
+    /**This is the table column for the appointment location. */
     @FXML
     TableColumn<appointment, String> appointmentLocation;
+    /**This is the table column for the appointment contact. */
     @FXML
     TableColumn<appointment, Integer> appointmentContact;
+    /**This is the table column for the appointment type. */
     @FXML
     TableColumn<appointment, String> appointmentType;
+    /**This is the table column for the appointment start date. */
     @FXML
     TableColumn<appointment, String> appointmentStart;
+    /**This is the table column for the appointment end date. */
     @FXML
     TableColumn<appointment, String> appointmentEnd;
+    /**This is the table column for the appointment customer ID */
     @FXML
     TableColumn<appointment, Integer> appointmentCustomerID;
+    /**This is the table column for the appointment user ID. */
     @FXML
     TableColumn<appointment, Integer> appointmentUserID;
+    /**This is the table column for the customer ID. */
     @FXML
     TableColumn<customer, Integer> customerID;
+    /**This is the table column for the customer name. */
     @FXML
     TableColumn<customer, String> customerName;
+    /**This is the table column for the customer address. */
     @FXML
     TableColumn<customer, String> customerAddress;
+    /**This is the table column for the customer postal address. */
     @FXML
     TableColumn<customer, String> customerPostalCode;
+    /**This is the table column for the customer phone number. */
     @FXML
     TableColumn<customer, String> customerPhoneNumber;
+    /**This is the table column for the customer division ID. */
     @FXML
     TableColumn<customer, Integer> customerDivisionID;
+    /**This is the button used for adding a customer. */
     @FXML
     Button addCustomer;
+    /**This is the button used to update a customer. */
     @FXML
     Button updateCustomer;
+    /**This is the button used to delete a customer. */
     @FXML
     Button deleteCustomer;
+    /**This is the button used to add an appointment. */
     @FXML
     Button addAppointment;
+    /**This is the update appointment button. */
     @FXML
     Button updateAppointment;
+    /**This is the button to delete an appointment. */
     @FXML
     Button deleteAppointment;
+    /**These are the radio buttons to decide how to view the appointments. */
     @FXML
     RadioButton viewAll, byMonth, byWeek;
 
+    /**This switches the tableview to only show appointments for the current month. */
     @FXML
     public void updateByMonth(){
         byMonthList.clear();
@@ -103,6 +136,7 @@ public class mainScreenController implements Initializable {
     }
 
 
+    /**This switches the tablview to onlyn show appointments for the current week. */
     @FXML
     public void updateByWeek(){
         byWeekList.clear();
@@ -121,12 +155,15 @@ public class mainScreenController implements Initializable {
         System.out.println("YOU SELECTED UPDATE BY WEEK");
     }
 
+
+    /**This switches the tableview to show all appointments. */
     @FXML
     public void viewAllAppointments() {
         appointments.setItems(appointment.getAllAppointments());
         System.out.println("You selected view all appointments");
     }
 
+    /**This function switches the screen to the add customer screen. */
     @FXML
     public void switchToAddCustomer(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("add-customer.fxml"));
@@ -136,6 +173,7 @@ public class mainScreenController implements Initializable {
         stage.show();
     }
 
+    /**This function switches to the add appiontment screen. */
     @FXML
     public void switchToAddAppointment(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("add-appointment.fxml"));
@@ -145,6 +183,7 @@ public class mainScreenController implements Initializable {
         stage.show();
     }
 
+    /**This function switches to the update appointment screen. */
     @FXML
     public void switchToUpdateAppointment(ActionEvent actionEvent) throws IOException {
         if(!appointments.getSelectionModel().isEmpty()) {
@@ -167,6 +206,8 @@ public class mainScreenController implements Initializable {
         }
     }
 
+
+    /**This function deletes a customer. */
     @FXML
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException {
         if (customers.getSelectionModel().isEmpty()) {
@@ -196,6 +237,7 @@ public class mainScreenController implements Initializable {
         }
     }
 
+    /**This function deletes the selected appointment. */
     @FXML
     public void deleteAppointment(ActionEvent actionEvent) throws SQLException {
         if (appointments.getSelectionModel().isEmpty()) {
@@ -228,6 +270,7 @@ public class mainScreenController implements Initializable {
     }
 
 
+    /**This switches the screen to the update customer screen. */
     @FXML
     public void switchToUpdateCustomer(ActionEvent actionEvent) throws IOException {
         if(!customers.getSelectionModel().isEmpty()) {
@@ -250,6 +293,7 @@ public class mainScreenController implements Initializable {
     }
 
 
+    /**This switches the screen to the switch reports screen. */
     @FXML
     public void switchToReports(ActionEvent actionEvent) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("reports.fxml"));
@@ -260,6 +304,7 @@ public class mainScreenController implements Initializable {
             stage.show();
     }
 
+    /**This switches the screen to the contact schedule screen. */
     @FXML
     public void switchToContactSchedule(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contact-schedule.fxml"));
@@ -270,6 +315,7 @@ public class mainScreenController implements Initializable {
         stage.show();
     }
 
+    /**This screen switches to the percentage calculator screen. */
     @FXML
     public void switchToPercentages(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("percentages.fxml"));
@@ -281,7 +327,7 @@ public class mainScreenController implements Initializable {
     }
 
 
-
+    /**This isnitializes the tablewview and observable lists. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -343,11 +389,12 @@ public class mainScreenController implements Initializable {
         }
 
         counter++;
-        System.out.println(dtf.format(now));
-        System.out.println(dtf.format(now).substring(11, 13));
-        System.out.println(dtf.format(now).substring(5, 7));
+//        System.out.println(dtf.format(now));
+//        System.out.println(dtf.format(now).substring(11, 13));
+//        System.out.println(dtf.format(now).substring(5, 7));
     }
 
+    /**This function checks if there is an upcoming appointment or not. */
     private boolean isThereUpcomingAppointment() {
         String now = dtf.format(LocalDateTime.now()).toString();
         String dateOfAppointment = null;

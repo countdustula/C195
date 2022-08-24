@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**This is main. */
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -18,6 +19,7 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**This is the main function, with the commented code to set the language to french. */
     public static void main(String[] args) throws SQLException {
 //        Locale.setDefault(new Locale("fr"));
 

@@ -18,62 +18,94 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**This is the controller for the schedule screen. */
 public class contactScheduleController implements Initializable {
+    /**This is the stage for this screen. */
     private Stage stage;
+    /**This is the scene for this screen. */
     private Scene scene;
+    /**This is the root for this screen. */
     private Parent root;
+    /**This is the ObservableList for all of Anika's appointments. */
     public static ObservableList<Object> anikaAppointments = FXCollections.observableArrayList();
+    /**This is the ObservableList for all of Daniel's appointments. */
     public static ObservableList<Object> danielAppointments = FXCollections.observableArrayList();
+    /**This is the ObservableList for Li's appointments. */
     public static ObservableList<Object> liAppointments = FXCollections.observableArrayList();
+    /**This is the tableview for Anika's appointments. */
     @FXML
     TableView<Object> anikaSchedule;
+    /**This is the tableview for Daniel's appointments. */
     @FXML
     TableView<Object> danielSchedule;
+    /**Thi is the tableview for Li's appointments. */
     @FXML
     TableView<Object> liSchedule;
+    /**This is the Table column that represents the appointment ID. */
     @FXML
     TableColumn<appointment, Integer> anikaAppointmentID;
+    /**This is the table colunn that represents the appointment title. */
     @FXML
     TableColumn<appointment, String> anikaAppointmentTitle;
+    /**This is the table column that represents the appointment type. */
     @FXML
     TableColumn<appointment, String> anikaAppointmentType;
+    /**This is the table column that represents the appointment description. */
     @FXML
     TableColumn<appointment, String> anikaAppointmentDescription;
+    /**This is the table column that represents the appointment start date and time. */
     @FXML
     TableColumn<appointment, String> anikaAppointmentStart;
+    /**This is the table column that represents the appointment end. */
     @FXML
     TableColumn<appointment, String> anikaAppointmentEnd;
+    /**This is the table column that represents the customer ID. */
     @FXML
     TableColumn<appointment, Integer> anikaAppointmentCustomerID;
+    /**This is the Table column that represents the appointment ID. */
     @FXML
     TableColumn<appointment, Integer> danielAppointmentID;
+    /**This is the table colunn that represents the appointment title. */
     @FXML
     TableColumn<appointment, String> danielAppointmentTitle;
+    /**This is the table column that represents the appointment type. */
     @FXML
     TableColumn<appointment, String> danielAppointmentType;
+    /**This is the table column that represents the appointment description. */
     @FXML
     TableColumn<appointment, String> danielAppointmentDescription;
+    /**This is the table column that represents the appointment start date and time. */
     @FXML
     TableColumn<appointment, String> danielAppointmentStart;
+    /**This is the table column that represents the appointment end. */
     @FXML
     TableColumn<appointment, String> danielAppointmentEnd;
+    /**This is the table column that represents the customer ID. */
     @FXML
     TableColumn<appointment, Integer> danielAppointmentCustomerID;
+    /**This is the Table column that represents the appointment ID. */
     @FXML
     TableColumn<appointment, Integer> liAppointmentID;
+    /**This is the table colunn that represents the appointment title. */
     @FXML
     TableColumn<appointment, String> liAppointmentTitle;
+    /**This is the table column that represents the appointment type. */
     @FXML
     TableColumn<appointment, String> liAppointmentType;
+    /**This is the table column that represents the appointment description. */
     @FXML
     TableColumn<appointment, String> liAppointmentDescription;
+    /**This is the table column that represents the appointment start date and time. */
     @FXML
     TableColumn<appointment, String> liAppointmentStart;
+    /**This is the table column that represents the appointment end. */
     @FXML
     TableColumn<appointment, String> liAppointmentEnd;
+    /**This is the table column that represents the customer ID. */
     @FXML
     TableColumn<appointment, Integer> liAppointmentCustomerID;
 
+    /**On the "back" button, this function takes you back to the main screen. */
     @FXML
     public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main-screen.fxml"));
@@ -87,6 +119,7 @@ public class contactScheduleController implements Initializable {
         liAppointments.clear();
     }
 
+    /**This initializes the tableviews and arraylists. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for(int i=0; i<appointment.allAppointmentsArrayList.size(); i++){
@@ -130,9 +163,5 @@ public class contactScheduleController implements Initializable {
         liAppointmentEnd.setCellValueFactory(new PropertyValueFactory<appointment, String>("end"));
         liAppointmentCustomerID.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("customerID"));
         liSchedule.setItems(liAppointments);
-
-        System.out.println(anikaAppointments);
-        System.out.println(danielAppointments);
-        System.out.println(liAppointments);
     }
 }

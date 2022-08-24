@@ -8,20 +8,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**This is the class for the customer object. */
 public class customer {
-private Integer id;
-private String name;
-private String address;
-private String postalCode;
-private String phone;
-private String createDate;
-private String createdBy;
-private String lastUpdate;
-private String lastUpdatedBy;
-private Integer divisionID;
-public static ObservableList<Object> allCustomers = FXCollections.observableArrayList();
-public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
+    /**This represents the ID for the customer. */
+    private Integer id;
+    /**This represents the name for the customer. */
+    private String name;
+    /**This represents the address for the customer. */
+    private String address;
+    /**This represents the postal code for the customer. */
+    private String postalCode;
+    /**This represents the phone number for the customer. */
+    private String phone;
+    /**This represents the date the customer was created. */
+    private String createDate;
+    /**This represents how the customer was created. */
+    private String createdBy;
+    /**This represents the last time this customer's information was updated. */
+    private String lastUpdate;
+    /**This represents how the customer was last updated. */
+    private String lastUpdatedBy;
+    /**This represents the customer's division ID. */
+    private Integer divisionID;
+    /**This is the ObservableList of all the customers that have been created. */
+    public static ObservableList<Object> allCustomers = FXCollections.observableArrayList();
+    /**This represents the ArrayList of all the customers that have been created. */
+    public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
 
+    /**This is the constructor for the a customer. */
     public customer(Integer id, String name, String address, String postalCode, String phone, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, Integer divisionID) {
         this.id = id;
         this.name = name;
@@ -35,10 +49,12 @@ public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
         this.divisionID = divisionID;
     }
 
+    /**This returns the ObservableList of all the customers. */
     public static ObservableList<Object> getAllCustomers(){
         return allCustomers;
     }
 
+    /**This puts all of the customers in the database into the ObservableList and ArrayList. */
     public static void DBtoAL() {
 
         try {
@@ -64,90 +80,47 @@ public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
         }
 }
 
+    /**This is the setter for the customer ID. */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public void setLastUpdate(String lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-
-    public void setDivisionID(Integer divisionID) {
-        this.divisionID = divisionID;
-    }
-
+    /**This is the getter for the customer ID. */
     public Integer getId() {
         return id;
     }
 
+    /**This is the getter for the customer name. */
     public String getName() {
         return name;
     }
 
+    /**This is the getter for the customer address. */
     public String getAddress() {
         return address;
     }
 
+    /**This is the getter for the customer postal code. */
     public String getPostalCode() {
         return postalCode;
     }
 
+    /**This is the getter for the customer phone numberl. */
     public String getPhone() {
         return phone;
     }
 
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public String getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
+    /**This is the getter for the division ID. */
     public Integer getDivisionID() {
         return divisionID;
     }
 
+    /**This is the getter for the customer arraylist. */
     public static ArrayList<customer> getAllCustomersArrayList(){
         return allCustomersArrayList;
     }
 
+    /**This is the getter for getting all of the customer ID's */
     public static ObservableList<Object> getAllCustomerID() {
         ObservableList ans = FXCollections.observableArrayList();
 

@@ -9,9 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,35 +20,54 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**This class is the controller for the "Add Customer" scene. */
 public class addCustomerController implements Initializable {
+    /**This is the stage for the screen */
     private Stage stage;
+    /**This is the scene for the screen. */
     private Scene scene;
+    /**This is the root for the screen */
     private Parent root;
+    /**This is the submit button, to submit a new customer. */
     @FXML
     Button submit;
+    /**This is the cancel button, to cancel making a new customer. */
     @FXML
     Button cancel;
+    /**This is the textfield where the user inputs the customer name. */
     @FXML
     TextField customerName;
+    /**This is the textfield where the user inputs the customer address. */
     @FXML
     TextField customerAddress;
+    /**This is the textfield where the user inputs the customer postal code. */
     @FXML
     TextField customerPostalCode;
+    /**This is the textfield where the user inputs the customer phone number. */
     @FXML
     TextField customerPhone;
+
+    /**This is the Observablelist of available countries within the software. */
     public static ObservableList<String> countries= FXCollections.observableArrayList(
             "United Kingdom",
             "United States",
             "Canada"
     );
+    /**This is the Observablelist of the US ID's */
     public static ObservableList<Integer> USID = FXCollections.observableArrayList();
+    /**This is the Observablelist of Canada's ID's */
     public static ObservableList<Integer> canadaID = FXCollections.observableArrayList();
+    /**This is the Observablelist of the UK's ID's */
     public static ObservableList<Integer> UKID = FXCollections.observableArrayList();
+    /**This is the combobox where the user selects their country. */
     @FXML
     ComboBox<String> customerCountry = new ComboBox(countries);
+    /**This is the combobox where the user selects the customer's division ID. */
     @FXML
     ComboBox<Integer> customerDivisionID = new ComboBox<>();
 
+
+    /**This is the function associated with the cancel button, to go back a screen. */
     @FXML
     public void cancelToMainForm(ActionEvent actionEvent) throws IOException {
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
@@ -60,6 +77,16 @@ public class addCustomerController implements Initializable {
         stage.show();
     }
 
+    /**This is an instance of the interface to use the alert lambda function. */
+    MyInterface myInterface = (x, y, z) ->{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deleting Customer", ButtonType.YES, ButtonType.NO);
+        alert.setTitle(x);
+        alert.setHeaderText(y);
+        alert.setContentText(z);
+        alert.showAndWait();
+    };
+
+    /**This is the function associated with the submit button, to add a customer. */
     @FXML
     public void submit(ActionEvent actionEvent) throws IOException, SQLException {
         if(customerName.getText().isEmpty() ||
@@ -68,7 +95,7 @@ public class addCustomerController implements Initializable {
                 customerPhone.getText().isEmpty() ||
                 customerCountry.getValue() == null ||
                 customerDivisionID.getValue() == null){
-            loginController.showAlert("One or more fields is empty.",
+            myInterface.alert("One or more fields is empty.",
                     "A field is empty.",
                     "Fill out all fields and try again.");
         }
@@ -91,6 +118,8 @@ public class addCustomerController implements Initializable {
         }
     }
 
+
+    /**This is the function associated with setting the customer division ID based upon the customer's country. */
     @FXML
     private void comboAction(ActionEvent event) {
         if(customerCountry.getValue().contentEquals("United Kingdom")) {
@@ -104,6 +133,7 @@ public class addCustomerController implements Initializable {
         }
     }
 
+    /**This initalizes the observablelists and comboboxes upon reaching the screen. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCountry.setItems(countries);
