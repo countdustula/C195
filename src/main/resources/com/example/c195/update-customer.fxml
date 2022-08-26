@@ -22,5 +22,7 @@
       <Label layoutX="25.0" layoutY="197.0" prefHeight="26.0" prefWidth="55.0" text="Phone:" />
       <Button fx:id="submit" layoutX="568.0" layoutY="415.0" mnemonicParsing="false" onAction="#submit" prefHeight="41.0" prefWidth="113.0" text="Submit" />
       <Button fx:id="cancel" layoutX="25.0" layoutY="407.0" mnemonicParsing="false" onAction="#cancelToMainForm" prefHeight="49.0" prefWidth="74.0" text="Cancel" />
+      <TextField fx:id="customerIDTextField" disable="true" editable="false" layoutX="91.0" layoutY="240.0" />
+      <Label layoutX="12.0" layoutY="244.0" prefHeight="18.0" prefWidth="74.0" text="Customer ID:" />
    </children>
 </AnchorPane>

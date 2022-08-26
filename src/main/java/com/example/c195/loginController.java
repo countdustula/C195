@@ -84,7 +84,7 @@ public class loginController implements Initializable {
 
 
 
-        if ((String.valueOf(Locale.getDefault())).contentEquals("fr")) {
+        if ((String.valueOf(Locale.getDefault())).substring(0,2).contentEquals("fr")) {
             userIdLabel.setText("Numéro d'utilisateur");
             passwordLabel.setText("Le mot de passe");
             loginButton.setText("Connexion");
@@ -117,7 +117,7 @@ public class loginController implements Initializable {
     @FXML
     public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
 
-        if (!userId.getText().isEmpty() && isInt(userId.getText()) && !userPassword.getText().isEmpty()) {
+        if ((userId.getText().contentEquals("1") && userPassword.getText().contentEquals("test")) || (userId.getText().contentEquals("2") && userPassword.getText().contentEquals("admin"))) {
 
             pw.println("Successful login by UserID: " + userId.getText() + " at " + LocalDateTime.now() + "\n");
             pw.close();
@@ -130,11 +130,11 @@ public class loginController implements Initializable {
         } else {
             pw.println("Unsuccessful login by UserID: " + userId.getText() + " at " + LocalDateTime.now());
             pw.close();
-            if (!String.valueOf(Locale.getDefault()).contentEquals("fr")) {
-                showAlert("Invalid input.", "User ID must only contain numbers.", "Also make sure that the password isn't blank.");
+            if (!String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("fr")) {
+                showAlert("Invalid input.", "The login credentials were invalid.", "Please try again.");
             }
             else{
-                showAlert("Entrée invalide.", "L'ID utilisateur ne doit contenir que des chiffres.", "Assurez-vous également que le mot de passe n'est pas vide.");
+                showAlert("Entrée invalide.", "Les identifiants de connexion étaient invalides.", "Veuillez réessayer.");
             }
         }
 

@@ -26,9 +26,9 @@ public class updateCustomerController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    public static ObservableList<Integer> USID = FXCollections.observableArrayList();
-    public static ObservableList<Integer> canadaID = FXCollections.observableArrayList();
-    public static ObservableList<Integer> UKID = FXCollections.observableArrayList();
+    public static ObservableList<String> USID = FXCollections.observableArrayList();
+    public static ObservableList<String> canadaID = FXCollections.observableArrayList();
+    public static ObservableList<String> UKID = FXCollections.observableArrayList();
     Integer customerID;
     @FXML
     Button submit;
@@ -43,7 +43,9 @@ public class updateCustomerController implements Initializable {
     @FXML
     TextField customerPhone;
     @FXML
-    ComboBox<Integer> customerDivisionID = new ComboBox<>();
+    TextField customerIDTextField;
+    @FXML
+    ComboBox<String> customerDivisionID = new ComboBox<>();
     public static ObservableList<String> countries = FXCollections.observableArrayList(
             "United Kingdom",
             "United States",
@@ -84,7 +86,7 @@ public class updateCustomerController implements Initializable {
                     "\tPostal_Code = '" + customerPostalCode.getText().toString() + "', \n" +
                     "\tPhone = '" + customerPhone.getText().toString() + "', \n" +
                     "\tLast_Update = '" + dtf.format(LocalDateTime.now()).toString() + "', \n" +
-                    "\tDivision_ID = '" + customerDivisionID.getValue().toString()+ "' \n" +
+                    "\tDivision_ID = '" + divisionID.divisionIDMap.get(customerDivisionID.getValue().toString())+ "' \n" +
                     "WHERE\n" +
                     "\tCustomer_ID = " + customerID);
             customer.getAllCustomers().clear();
@@ -114,13 +116,14 @@ public class updateCustomerController implements Initializable {
         customerAddress.setText(customer.getAddress());
         customerPostalCode.setText(customer.getPostalCode());
         customerPhone.setText(customer.getPhone());
-        customerDivisionID.setValue(customer.getDivisionID());
+        customerDivisionID.setValue(divisionID.divisionIDMapIDtoName.get(customer.getDivisionID()));
         customerID = customer.getId();
+        customerIDTextField.setText(String.valueOf(customer.getId()));
 
         if(customer.getId() < 55){
             customerCountry.setValue("United States");
         }
-        if(customer.getId() < 73 && customerDivisionID.getValue() > 54){
+        if(customer.getId() < 73 && customer.getDivisionID() > 54){
             customerCountry.setValue("Canada");
         }
         if(customer.getId() > 72){
@@ -142,14 +145,14 @@ public class updateCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCountry.setItems(countries);
 
-        for (int i = 1; i <= 54; i++) {
-            USID.add(i);
+        for (int i=0; i<divisionID.usDivId.size(); i++){
+            USID.add(divisionID.usDivId.get(i).getDivisionName());
         }
-        for (int i = 60; i <= 72; i++) {
-            canadaID.add(i);
+        for (int i=0; i<divisionID.ukDivId.size(); i++){
+            UKID.add(divisionID.ukDivId.get(i).getDivisionName());
         }
-        for (int i = 101; i <= 104; i++) {
-            UKID.add(i);
+        for (int i=0; i<divisionID.canadaDivId.size(); i++){
+            canadaID.add(divisionID.canadaDivId.get(i).getDivisionName());
         }
 
 

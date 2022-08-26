@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**This is the main screen controller. */
@@ -244,15 +245,16 @@ public class mainScreenController implements Initializable {
             loginController.showAlert("No appointment selected", "You did not select an appointment to delete."
                     , "Please select an appointment and try again.");
         } else {
+            appointment selectedAppointment = (appointment) appointments.getSelectionModel().getSelectedItem();
+            String id = String.valueOf(selectedAppointment.getId());
+            String type = String.valueOf(selectedAppointment.getType());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Deleting Customer", ButtonType.YES, ButtonType.NO);
             alert.setTitle("Deleting Appointment");
-            alert.setHeaderText("You are about to delete this selected appointment.");
+            alert.setHeaderText("This appointment has an ID of " + id + " and appointment type of " + type);
             alert.setContentText("Are you sure you want to delete this appointment?");
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
-                appointment selectedAppointment = (appointment) appointments.getSelectionModel().getSelectedItem();
-                String id = String.valueOf(selectedAppointment.getId());
 
                 Statement statement = JDBC.connection.createStatement();
                 JDBC.connection.createStatement().executeUpdate("delete from appointments where Appointment_ID=" + id);
@@ -264,6 +266,9 @@ public class mainScreenController implements Initializable {
                 viewAll.setSelected(true);
                 appointment.DBtoAL();
                 appointments.setItems(appointment.getAllAppointments());
+                loginController.showAlert("Appointment has been deleted.",
+                        "Appointment with ID " + id + "and appointment type of " + type + " has been deleted.",
+                        "Please click okay to continue");
 
             }
         }
@@ -357,6 +362,8 @@ public class mainScreenController implements Initializable {
         customer.DBtoAL();
         appointment.DBtoAL();
 
+        divisionID.databaseDivisionIDConvertor();
+
 
         appointmentID.setCellValueFactory(new PropertyValueFactory<appointment, Integer>("id"));
         appointmentTitle.setCellValueFactory(new PropertyValueFactory<appointment, String>("title"));
@@ -377,15 +384,25 @@ public class mainScreenController implements Initializable {
         System.out.println(appointment.allAppointmentsArrayList.get(0).getStart().substring(0, 10));
         System.out.println(dtf.format(now).substring(5,7));
 
-        if(isThereUpcomingAppointment() == true && counter == 0) {
+        if(isThereUpcomingAppointment() == true && counter == 0 && String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("en")) {
             loginController.showAlert("Upcoming Appointment",
                     "You have an appointment within 15 minutes from now.",
                     "The appointment ID is " + upcomingAppointment.getId() + " and the date and times is " + upcomingAppointment.getStart());
         }
-        else if(counter == 0){
+        else if(isThereUpcomingAppointment() == true && counter == 0 && String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("fr")) {
+            loginController.showAlert("Rendez-vous à venir",
+                    "Vous avez un rendez-vous dans 15 minutes à partir de maintenant.",
+                    "L'identifiant du rendez-vous est " + upcomingAppointment.getId() + " et la date et l'heure sont " + upcomingAppointment.getStart());
+        }
+        else if(counter == 0 && String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("en")){
             loginController.showAlert("No Upcoming Appointments",
                     "You have no appointments within 15 minutes from now.",
                     "You have no appointments within 15 minutes from now.");
+        }
+        else if(counter == 0 && String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("fr")){
+            loginController.showAlert("Aucun rendez-vous à venir",
+                    "Vous n'avez pas de rendez-vous dans les 15 minutes à venir.",
+                    "Vous n'avez pas de rendez-vous dans les 15 minutes à venir.");
         }
 
         counter++;

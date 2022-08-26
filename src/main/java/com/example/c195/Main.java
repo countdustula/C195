@@ -22,8 +22,9 @@ public class Main extends Application {
     /**This is the main function, with the commented code to set the language to french. */
     public static void main(String[] args) throws SQLException {
 //        Locale.setDefault(new Locale("fr"));
-
         launch();
+
+
 
     }
 }
