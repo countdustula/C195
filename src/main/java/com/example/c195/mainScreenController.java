@@ -405,6 +405,7 @@ public class mainScreenController implements Initializable {
         }
 
         counter++;
+        System.out.println(appointment.allAppointmentsArrayList.get(0).getUTCStart().substring(0, 10));
     }
 
     /**This function checks if there is an upcoming appointment or not. */

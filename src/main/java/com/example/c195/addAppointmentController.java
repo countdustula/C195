@@ -82,6 +82,7 @@ public class addAppointmentController implements Initializable {
     public void cancel(ActionEvent actionEvent) throws IOException {
         contacts.clear();
         types.clear();
+        times.clear();
 
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -187,6 +188,7 @@ public class addAppointmentController implements Initializable {
             JDBC.connection.createStatement().executeUpdate("INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) Value (\"" + title.getText() + "\", \"" + description.getText() + "\", \"" + location.getText() + "\", \"" + type.getValue().toString() + "\", \"" + startSTRING + "\", \"" + endSTRING + "\", \"" + dtf.format(LocalDateTime.now()).toString()  + "\", \"software\", \"" + dtf.format(LocalDateTime.now()).toString() +"\", \"software\",  " + customerID.getValue().toString() + ", " + userID.getValue().toString() + ", " + contactID.toString() +")");
             appointment.getAllAppointments().clear();
             contacts.clear();
+            times.clear();
             types.clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

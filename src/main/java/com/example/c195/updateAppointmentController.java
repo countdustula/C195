@@ -67,6 +67,7 @@ public class updateAppointmentController implements Initializable {
     public void cancel(ActionEvent actionEvent) throws IOException {
         contacts.clear();
         types.clear();
+        times.clear();
 
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -96,10 +97,12 @@ public class updateAppointmentController implements Initializable {
             }
         }
 
+        System.out.println(usedTimes);
 
         int selectedStart = Integer.valueOf(selectedAppointmentStart.substring(0,2));
         int selectedEnd = Integer.valueOf(selectedAppointmentEnd.substring(0, 2));
         String selectedDate = selectedAppointmentDate;
+
 
         for(int h=selectedStart; h<=selectedEnd; h++){
             String example;
@@ -111,6 +114,8 @@ public class updateAppointmentController implements Initializable {
             }
             usedTimes.remove(example);
         }
+
+        System.out.println(usedTimes);
 
         int startTime = Integer.valueOf(start.getValue().toString().substring(0, 2));
         int endTime = Integer.valueOf(end.getValue().toString().substring(0, 2));
@@ -196,6 +201,7 @@ public class updateAppointmentController implements Initializable {
 
 
             appointment.getAllAppointments().clear();
+            times.clear();
             contacts.clear();
             types.clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
@@ -217,16 +223,16 @@ public class updateAppointmentController implements Initializable {
         customerID.setValue(appointment.getCustomerID());
         userID.setValue(appointment.getUserID());
         date.setValue(LocalDate.parse(appointment.getUTCStart().substring(0,10)));
-        start.setValue(appointment.getUTCStart().substring(11, 16));
-        end.setValue(appointment.getUTCEnd().substring(11, 16));
+        start.setValue(appointment.getUTCStart().substring(11, 16) + ":00");
+        end.setValue(appointment.getUTCEnd().substring(11, 16) + ":00");
 
         Statement statement = JDBC.connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM appointments WHERE Appointment_ID = " + appointment.getId());
 
         appointmentID = appointment.getId();
         selectedAppointmentDate =  appointment.getUTCStart().substring(0,10);
-        selectedAppointmentStart = appointment.getUTCStart().substring(11, 16);
-        selectedAppointmentEnd = appointment.getUTCStart().substring(11, 16);
+        selectedAppointmentStart = appointment.getUTCStart().substring(11, 19);
+        selectedAppointmentEnd = appointment.getUTCEnd().substring(11, 19);
         }
 
     @Override
