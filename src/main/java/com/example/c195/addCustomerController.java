@@ -135,7 +135,7 @@ public class addCustomerController implements Initializable {
         }
     }
 
-    /**This initalizes the observablelists and comboboxes upon reaching the screen. */
+    /**This initalizes the observablelists and comboboxes upon reaching the screen.  It also includes another example of a lambda expression. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCountry.setItems(countries);
@@ -147,8 +147,12 @@ public class addCustomerController implements Initializable {
         for (int i=0; i<divisionID.ukDivId.size(); i++){
             UKID.add(divisionID.ukDivId.get(i).getDivisionName());
         }
-        for (int i=0; i<divisionID.canadaDivId.size(); i++){
-            canadaID.add(divisionID.canadaDivId.get(i).getDivisionName());
-        }
+//        for (int i=0; i<divisionID.canadaDivId.size(); i++){
+//            canadaID.add(divisionID.canadaDivId.get(i).getDivisionName());
+//        }
+        /**This is another case of a lambda expression.  Instead of writing a "for" loop, I used this simpler expression. */
+        divisionID.canadaDivId.forEach((a) ->{
+           canadaID.add(a.getDivisionName());
+        });
     }
 }

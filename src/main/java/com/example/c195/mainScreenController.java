@@ -186,7 +186,7 @@ public class mainScreenController implements Initializable {
 
     /**This function switches to the update appointment screen. */
     @FXML
-    public void switchToUpdateAppointment(ActionEvent actionEvent) throws IOException {
+    public void switchToUpdateAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if(!appointments.getSelectionModel().isEmpty()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("update-appointment.fxml"));
             root = loader.load();
@@ -332,12 +332,14 @@ public class mainScreenController implements Initializable {
     }
 
 
-    /**This isnitializes the tablewview and observable lists. */
+    /**This initializes the tablewview and observable lists. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
         final ToggleGroup group = new ToggleGroup();
+
+
 
 
         viewAll.setToggleGroup(group);
@@ -381,9 +383,6 @@ public class mainScreenController implements Initializable {
 
         LocalDateTime now = LocalDateTime.now();
 
-        System.out.println(appointment.allAppointmentsArrayList.get(0).getStart().substring(0, 10));
-        System.out.println(dtf.format(now).substring(5,7));
-
         if(isThereUpcomingAppointment() == true && counter == 0 && String.valueOf(Locale.getDefault()).substring(0, 2).contentEquals("en")) {
             loginController.showAlert("Upcoming Appointment",
                     "You have an appointment within 15 minutes from now.",
@@ -406,9 +405,6 @@ public class mainScreenController implements Initializable {
         }
 
         counter++;
-//        System.out.println(dtf.format(now));
-//        System.out.println(dtf.format(now).substring(11, 13));
-//        System.out.println(dtf.format(now).substring(5, 7));
     }
 
     /**This function checks if there is an upcoming appointment or not. */

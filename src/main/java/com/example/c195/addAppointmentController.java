@@ -1,4 +1,5 @@
 package com.example.c195;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -96,16 +97,16 @@ public class addAppointmentController implements Initializable {
         ArrayList<String> placeHolder = new ArrayList<>();
 
         for(int i=0; i<appointment.getAllAppointments().size(); i++){
-            int start = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getStart().substring(11, 13));
-            int end = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getEnd().substring(11, 13));
+            int start = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getUTCStart().substring(11, 13));
+            int end = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getUTCEnd().substring(11, 13));
 
             for(int j = start; j <= end; j++){
                 String example;
                 if(j < 10){
-                    example = appointment.allAppointmentsArrayList.get(i).getStart().substring(0, 10) + " " + "0" + j + ":00:00";
+                    example = appointment.allAppointmentsArrayList.get(i).getUTCStart().substring(0, 10) + " " + "0" + j + ":00:00";
                 }
                 else{
-                    example = appointment.allAppointmentsArrayList.get(i).getEnd().substring(0, 10) + " " + j + ":00:00";
+                    example = appointment.allAppointmentsArrayList.get(i).getUTCEnd().substring(0, 10) + " " + j + ":00:00";
                 }
                 usedTimes.add(example);
             }
@@ -231,6 +232,8 @@ public class addAppointmentController implements Initializable {
         times.add("20:00:00");
         times.add("21:00:00");
         times.add("22:00:00");
+
+
 
         contact.setItems(contacts);
         start.setItems(times);

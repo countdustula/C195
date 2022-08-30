@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 /**This is main. */
 public class Main extends Application {
@@ -24,7 +29,11 @@ public class Main extends Application {
 //        Locale.setDefault(new Locale("fr"));
         launch();
 
-
+        LocalDate testDate = LocalDate.of(2022, 8, 30);
+        LocalTime testTime = LocalTime.of(13, 00,00);
+        ZonedDateTime test = ZonedDateTime.of(testDate, testTime, ZoneId.of("Europe/Paris"));
+        System.out.println(test.withZoneSameInstant(ZoneId.of(TimeZone.getDefault().getID())));
+        ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("UTC")).forEach(System.out::println);
 
     }
 }

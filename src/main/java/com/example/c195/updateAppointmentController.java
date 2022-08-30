@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -80,16 +81,16 @@ public class updateAppointmentController implements Initializable {
         ArrayList<String> placeHolder = new ArrayList<>();
 
         for(int i=0; i<appointment.getAllAppointments().size(); i++){
-            int start = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getStart().substring(11, 13));
-            int end = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getEnd().substring(11, 13));
+            int start = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getUTCStart().substring(11, 13));
+            int end = Integer.valueOf(appointment.allAppointmentsArrayList.get(i).getUTCEnd().substring(11, 13));
 
             for(int j = start; j <= end; j++){
                 String example;
                 if(j < 10){
-                    example = appointment.allAppointmentsArrayList.get(i).getStart().substring(0, 10) + " " + "0" + j + ":00:00";
+                    example = appointment.allAppointmentsArrayList.get(i).getUTCStart().substring(0, 10) + " " + "0" + j + ":00:00";
                 }
                 else{
-                    example = appointment.allAppointmentsArrayList.get(i).getEnd().substring(0, 10) + " " + j + ":00:00";
+                    example = appointment.allAppointmentsArrayList.get(i).getUTCEnd().substring(0, 10) + " " + j + ":00:00";
                 }
                 usedTimes.add(example);
             }
@@ -205,7 +206,7 @@ public class updateAppointmentController implements Initializable {
         }
     }
 
-    public void setAllTextFields(appointment appointment) {
+    public void setAllTextFields(appointment appointment) throws SQLException {
         title.setText(appointment.getTitle());
         description.setText(appointment.getDescription());
         location.setText(appointment.getLocation());
@@ -215,14 +216,17 @@ public class updateAppointmentController implements Initializable {
         type.setValue(appointment.getType());
         customerID.setValue(appointment.getCustomerID());
         userID.setValue(appointment.getUserID());
-        date.setValue(LocalDate.parse(appointment.getStart().substring(0, 10)));
-        start.setValue(appointment.getStart().substring(11));
-        end.setValue(appointment.getEnd().substring(11));
+        date.setValue(LocalDate.parse(appointment.getUTCStart().substring(0,10)));
+        start.setValue(appointment.getUTCStart().substring(11, 16));
+        end.setValue(appointment.getUTCEnd().substring(11, 16));
+
+        Statement statement = JDBC.connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT * FROM appointments WHERE Appointment_ID = " + appointment.getId());
 
         appointmentID = appointment.getId();
-        selectedAppointmentDate = appointment.getStart().substring(0,10);
-        selectedAppointmentStart = appointment.getStart().substring(11, 19);
-        selectedAppointmentEnd = appointment.getEnd().substring(11, 19);
+        selectedAppointmentDate =  appointment.getUTCStart().substring(0,10);
+        selectedAppointmentStart = appointment.getUTCStart().substring(11, 16);
+        selectedAppointmentEnd = appointment.getUTCStart().substring(11, 16);
         }
 
     @Override
