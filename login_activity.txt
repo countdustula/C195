@@ -239,3 +239,10 @@ Successful login by UserID: 1 at 2022-08-30T11:38:37.725611700
 
 Successful login by UserID: 1 at 2022-08-30T11:41:17.125023200
 
+Successful login by UserID: test at 2022-09-01T08:23:58.794238300
+
+Successful login by UserID: admin at 2022-09-01T08:24:09.294358100
+
+Unsuccessful login by UserID: test at 2022-09-01T08:24:16.802428400
+Successful login by UserID: test at 2022-09-01T08:24:37.788483
+

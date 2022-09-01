@@ -117,7 +117,7 @@ public class loginController implements Initializable {
     @FXML
     public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
 
-        if ((userId.getText().contentEquals("1") && userPassword.getText().contentEquals("test")) || (userId.getText().contentEquals("2") && userPassword.getText().contentEquals("admin"))) {
+        if ((userId.getText().contentEquals("test") && userPassword.getText().contentEquals("test")) || (userId.getText().contentEquals("admin") && userPassword.getText().contentEquals("admin"))) {
 
             pw.println("Successful login by UserID: " + userId.getText() + " at " + LocalDateTime.now() + "\n");
             pw.close();
