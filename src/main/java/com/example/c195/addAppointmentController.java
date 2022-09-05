@@ -16,14 +16,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
 
 
 /** This is the controller for the "Add Appointment" screen. */
 public class addAppointmentController implements Initializable {
+    public static ObservableList<Object> times2 = FXCollections.observableArrayList();
     /**This is the stage for the screen that is shown. */
     private Stage stage;
     /**This is the scene for the screen that is shown. */
@@ -83,6 +86,7 @@ public class addAppointmentController implements Initializable {
         contacts.clear();
         types.clear();
         times.clear();
+        times2.clear();
 
         root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -142,8 +146,10 @@ public class addAppointmentController implements Initializable {
 
     /**This is the function that checks if the proposed appointment times make sense.  This is in the sense of if the end time comes after the start. */
     public boolean doTimesMakeSense(){
-        Integer beginning = Integer.valueOf(start.getValue().toString().substring(0, 2));
-        Integer ending = Integer.valueOf(end.getValue().toString().substring(0, 2));
+        Integer beginning = times2.indexOf(start.getValue());
+        Integer ending = times2.indexOf(end.getValue());
+
+
 
         if(beginning < ending){
             return true;
@@ -177,8 +183,46 @@ public class addAppointmentController implements Initializable {
             loginController.showAlert("Times overlap.", "There is a conflict with the appointment time.", "The appointment time and date overlaps.  Check available hours and dates and try again.");
         }
         else {
-            String startSTRING = date.getValue().toString() + " " + start.getValue().toString();
-            String endSTRING = date.getValue().toString() + " " + end.getValue().toString();
+
+            int startYear = Integer.valueOf(date.getValue().getYear());
+            int startMonth = Integer.valueOf(date.getValue().getMonthValue());
+            int startDay = Integer.valueOf(date.getValue().getDayOfMonth());
+            int startHour = Integer.valueOf(start.getValue().toString().substring(0, 2));
+
+            LocalDate startDate = LocalDate.of(startYear, startMonth, startDay);
+            LocalTime startTime = LocalTime.of(startHour, 00,00);
+            ZonedDateTime startZDT = ZonedDateTime.of(startDate, startTime, ZoneId.of(TimeZone.getDefault().getID()));
+            Instant startInstant = startZDT.toInstant();
+            ZoneId localZoneId = ZoneId.of("UTC");
+            ZonedDateTime startUTCtoLocal = startInstant.atZone(localZoneId);
+            String startDateTime = String.valueOf(startUTCtoLocal.toLocalDate()) + " " + String.valueOf(startUTCtoLocal.toLocalTime());
+
+
+            int endYear = Integer.valueOf(date.getValue().getYear());
+            int endMonth = Integer.valueOf(date.getValue().getMonthValue());
+            int endDay = Integer.valueOf(date.getValue().getDayOfMonth());
+            if(Integer.valueOf(times2.get(0).toString().substring(0, 2)) > Integer.valueOf(Integer.valueOf(end.getValue().toString().substring(0, 2)))){
+                endDay = date.getValue().plusDays(1).getDayOfMonth();
+                endMonth = date.getValue().plusDays(1).getMonthValue();
+                endYear = date.getValue().plusDays(1).getYear();
+            }
+
+
+
+
+
+            int endHour = Integer.valueOf(end.getValue().toString().substring(0, 2));
+
+            LocalDate endDate = LocalDate.of(endYear, endMonth, endDay);
+            LocalTime endTime = LocalTime.of(endHour, 00,00);
+            ZonedDateTime endZDT = ZonedDateTime.of(endDate, endTime, ZoneId.of(TimeZone.getDefault().getID()));
+            Instant endInstant = endZDT.toInstant();
+            ZonedDateTime endUTCtoLocal = endInstant.atZone(localZoneId);
+            String endDateTime = String.valueOf(endUTCtoLocal.toLocalDate()) + " " + String.valueOf(endUTCtoLocal.toLocalTime());
+
+
+            String startSTRING = startDateTime;
+            String endSTRING = endDateTime;
             Integer contactID = null;
             if(contact.getValue().toString().contentEquals("Anika Costa")){contactID = 1;}
             if(contact.getValue().toString().contentEquals("Daniel Garcia")){contactID = 2;}
@@ -189,6 +233,7 @@ public class addAppointmentController implements Initializable {
             appointment.getAllAppointments().clear();
             contacts.clear();
             times.clear();
+            times2.clear();
             types.clear();
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -218,6 +263,7 @@ public class addAppointmentController implements Initializable {
         type.setItems(types);
         userID.setItems(userIDList);
         customerID.setItems(customer.getAllCustomerID());
+        
 
         times.add("08:00:00");
         times.add("09:00:00");
@@ -237,8 +283,24 @@ public class addAppointmentController implements Initializable {
 
 
 
+        times.forEach((a) ->{
+            ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
+            LocalDate date = LocalDate.of(2022, 1, 1);
+            LocalTime time = LocalTime.of(Integer.valueOf(a.toString().substring(0, 2)), 00,00);
+            ZonedDateTime endZDT = ZonedDateTime.of(date, time, ZoneId.of("America/New_York"));
+            Instant endInstant = endZDT.toInstant();
+            ZonedDateTime endUTCtoLocal = endInstant.atZone(localZoneId);
+            String dateTime = String.valueOf(endUTCtoLocal.toLocalTime() + ":00");
+
+
+            System.out.println(dateTime);
+            times2.add(dateTime);
+        });
+
+
+
         contact.setItems(contacts);
-        start.setItems(times);
-        end.setItems(times);
+        start.setItems(times2);
+        end.setItems(times2);
     }
 }
