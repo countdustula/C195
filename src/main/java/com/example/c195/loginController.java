@@ -59,7 +59,7 @@ public class loginController implements Initializable {
     private Text locationText;
     /**This is the login button. */
     @FXML
-    private Button loginButton;
+    public Button loginButton;
     /**This is the label that signifies the user ID text box. */
     @FXML
     private Label userIdLabel;
@@ -83,14 +83,12 @@ public class loginController implements Initializable {
         locationText.setText(String.valueOf(zoneId));
 
 
-
         if ((String.valueOf(Locale.getDefault())).substring(0,2).contentEquals("fr")) {
             userIdLabel.setText("Numéro d'utilisateur");
             passwordLabel.setText("Le mot de passe");
             loginButton.setText("Connexion");
             locationLabel.setText("emplacement");
         }
-
     }
 
     /**This decides whether the input is an integer or not. */
@@ -112,21 +110,39 @@ public class loginController implements Initializable {
         alert.showAndWait();
     }
 
+    public Integer setUserIdAndPassword(Integer int1, Integer int2){
+        return int1 + int2;
+    }
+
+    public boolean doesExistInDB(String username, String password){
+        if(username.contentEquals("test") && password.contentEquals("test")){
+            return true;
+        }
+        else if((username.contentEquals("admin") && password.contentEquals("admin"))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     /**This function brings you to the main screen if the logic is correct for the sign in. */
     @FXML
-    public void switchToMainScreen(ActionEvent actionEvent) throws IOException {
+    public boolean switchToMainScreen(ActionEvent actionEvent) throws IOException {
 
-        if ((userId.getText().contentEquals("test") && userPassword.getText().contentEquals("test")) || (userId.getText().contentEquals("admin") && userPassword.getText().contentEquals("admin"))) {
+        if (doesExistInDB(userId.getText(), userPassword.getText())){
 
             pw.println("Successful login by UserID: " + userId.getText() + " at " + LocalDateTime.now() + "\n");
             pw.close();
+
+
 
             root = FXMLLoader.load(getClass().getResource("main-screen.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            return true;
         } else {
             pw.println("Unsuccessful login by UserID: " + userId.getText() + " at " + LocalDateTime.now());
             pw.close();
@@ -136,6 +152,8 @@ public class loginController implements Initializable {
             else{
                 showAlert("Entrée invalide.", "Les identifiants de connexion étaient invalides.", "Veuillez réessayer.");
             }
+
+            return false;
         }
 
     }
