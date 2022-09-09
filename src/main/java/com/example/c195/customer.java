@@ -31,7 +31,7 @@ public class customer {
     /**This represents the customer's division ID. */
     private Integer divisionID;
     /**This is the ObservableList of all the customers that have been created. */
-    public static ObservableList<Object> allCustomers = FXCollections.observableArrayList();
+    public static ObservableList<customer> allCustomers = FXCollections.observableArrayList();
     /**This represents the ArrayList of all the customers that have been created. */
     public static ArrayList<customer> allCustomersArrayList = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class customer {
     }
 
     /**This returns the ObservableList of all the customers. */
-    public static ObservableList<Object> getAllCustomers(){
+    public static ObservableList<customer> getAllCustomers(){
         return allCustomers;
     }
 

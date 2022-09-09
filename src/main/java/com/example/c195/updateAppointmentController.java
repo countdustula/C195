@@ -282,8 +282,8 @@ public class updateAppointmentController implements Initializable {
         contacts.add("Daniel Garcia");
         contacts.add("Li Lee");
 
-        types.add("Planning Session");
-        types.add("De-Briefing");
+        types.add("Full Groom");
+        types.add("Trim");
 
         userIDList.clear();
         userIDList.add(1);

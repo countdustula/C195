@@ -2,6 +2,8 @@ package com.example.c195;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,12 +42,14 @@ public class mainScreenController implements Initializable {
     public static ObservableList<Object> byMonthList = FXCollections.observableArrayList();
     /**This is the ObservableList that sorts the appointments by the current week. */
     public static ObservableList<Object> byWeekList = FXCollections.observableArrayList();
+    @FXML
+    TextField searchCustomerField;
     /**This is the button that takes you to the reports. */
     @FXML
     Button reports;
     /**This is the tableview that contains the customers. */
     @FXML
-    TableView<Object> customers;
+    TableView<customer> customers;
     /**This is the tableview that contains the appointments. */
     @FXML
     TableView<Object> appointments;
@@ -355,7 +359,6 @@ public class mainScreenController implements Initializable {
         customerDivisionID.setCellValueFactory(new PropertyValueFactory<customer, Integer>("divisionID"));
 
 
-
         customer.getAllCustomersArrayList().clear();
         customer.getAllCustomers().clear();
         appointment.getAllAppointments().clear();
@@ -380,6 +383,44 @@ public class mainScreenController implements Initializable {
 
         customers.setItems(customer.getAllCustomers());
         appointments.setItems(appointment.getAllAppointments());
+
+
+        FilteredList<customer> filteredCustomer = new FilteredList<customer>(customer.getAllCustomers(), p -> true);
+
+
+        searchCustomerField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredCustomer.setPredicate(myCustomer -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+
+
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(myCustomer.getName()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+
+
+                } else if (String.valueOf(myCustomer.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+        });
+
+
+        SortedList<customer> sortedPart = new SortedList<>(filteredCustomer);
+
+
+        sortedPart.comparatorProperty().bind(customers.comparatorProperty());
+
+        customers.setItems(sortedPart);
+
+
 
         LocalDateTime now = LocalDateTime.now();
 
@@ -406,6 +447,9 @@ public class mainScreenController implements Initializable {
 
         counter++;
         System.out.println(appointment.allAppointmentsArrayList.get(0).getUTCStart().substring(0, 10));
+
+
+
     }
 
     /**This function checks if there is an upcoming appointment or not. */
